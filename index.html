@@ -1,74 +1,86 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Taiwan Family Trip 2026 – Dashboard v1.5</title>
+<meta name="color-scheme" content="light dark">
+<title>Taiwan Family Trip 2026 – Dashboard v1.6</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" onerror="this.onerror=null;this.href='https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css'">
 <style>
-:root{--acc:#0ea5e9;--ink:#1d2433;--mut:#6b7385}
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,Segoe UI,Roboto,"PingFang TC","Microsoft JhengHei",sans-serif;background:#f4f6fa;color:var(--ink);font-size:15px;-webkit-text-size-adjust:100%}
+:root{--acc:#0ea5e9;--bg:#f4f6fa;--card:#fff;--ink:#1d2433;--mut:#6b7385;--line:#e5e7eb;--soft:#f1f5f9;--th:#f8fafc;--nav:#fff;
+--hrs:#fef9c3;--kid:#dcfce7;--legc:#0369a1;--link:#1a73e8;--linkbd:#bfdbfe;--mapbg:#e5e7eb;
+--tfix-bg:#ffedd5;--tfix:#c2410c;--tnew-bg:#dcfce7;--tnew:#15803d;--twarn-bg:#fee2e2;--twarn:#b91c1c;
+--modec-bg:#e0f2fe;--modec:#0369a1;--modep-bg:#ede9fe;--modep:#6d28d9;--md:#ea580c;--ok:#16a34a;--err:#991b1b}
+@media (prefers-color-scheme:dark){:root{--acc:#38bdf8;--bg:#0b1120;--card:#151c2c;--ink:#e5e9f2;--mut:#9aa4b8;--line:#2a3347;--soft:#1e2738;--th:#1b2333;--nav:#111827;
+--hrs:#3a3410;--kid:#123322;--legc:#7dd3fc;--link:#8ab4f8;--linkbd:#2b4a75;--mapbg:#1e2738;
+--tfix-bg:#43240f;--tfix:#fdba74;--tnew-bg:#0f3320;--tnew:#86efac;--twarn-bg:#451515;--twarn:#fca5a5;
+--modec-bg:#0c2c44;--modec:#7dd3fc;--modep-bg:#2a1f4a;--modep:#c4b5fd;--md:#fb923c;--ok:#4ade80;--err:#fca5a5}
+.leaflet-tile-pane{filter:brightness(.75) invert(1) contrast(.9) hue-rotate(200deg) saturate(.4)}
+.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#1e2738;color:#e5e9f2}.leaflet-popup-content a{color:#8ab4f8}
+.leaflet-control-attribution{background:rgba(20,28,44,.8)!important;color:#9aa4b8}.leaflet-control-attribution a{color:#8ab4f8}
+.leaflet-bar a{background:#1e2738;color:#e5e9f2;border-color:#2a3347}}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,Segoe UI,Roboto,"PingFang TC","Microsoft JhengHei",sans-serif;background:var(--bg);color:var(--ink);font-size:15px;-webkit-text-size-adjust:100%}
 header{background:linear-gradient(135deg,#0ea5e9,#6366f1);color:#fff;padding:16px 14px 12px}
 header h1{margin:0;font-size:1.2rem}header p{margin:4px 0 0;opacity:.92;font-size:.8rem}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
 .stat{background:rgba(255,255,255,.18);border-radius:10px;padding:6px;text-align:center}.stat b{display:block;font-size:1.05rem}.stat span{font-size:.68rem}
-nav{position:sticky;top:0;z-index:1000;background:#fff;display:flex;overflow-x:auto;border-bottom:1px solid #e3e7ef;-webkit-overflow-scrolling:touch}
+nav{position:sticky;top:0;z-index:1000;background:var(--nav);display:flex;overflow-x:auto;border-bottom:1px solid var(--line);-webkit-overflow-scrolling:touch}
 nav button{flex:1 0 auto;border:0;background:none;padding:12px 11px;font-size:.84rem;color:var(--mut);cursor:pointer;border-bottom:3px solid transparent}
 nav button.on{color:var(--acc);border-color:var(--acc);font-weight:600}
 main{max-width:920px;margin:auto;padding:10px}.tab{display:none}.tab.on{display:block}
-.card{background:#fff;border-radius:12px;padding:12px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.card{background:var(--card);border-radius:12px;padding:12px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .dayhead{display:flex;align-items:center;gap:10px;cursor:pointer}
 .dnum{background:var(--acc);color:#fff;border-radius:8px;padding:4px 6px;font-weight:700;font-size:.78rem;min-width:52px;text-align:center;line-height:1.15}
 .dnum small{display:block;font-weight:600;font-size:.64rem;opacity:.9}
 .we .dnum{background:#ec4899}
 .dayhead h3{margin:0;font-size:.98rem;flex:1}
-.mode{font-size:.68rem;padding:2px 7px;border-radius:20px;white-space:nowrap;background:#e0f2fe;color:#0369a1}.mode.pt{background:#ede9fe;color:#6d28d9}
+.mode{font-size:.68rem;padding:2px 7px;border-radius:20px;white-space:nowrap;background:var(--modec-bg);color:var(--modec)}.mode.pt{background:var(--modep-bg);color:var(--modep)}
 .body{display:none;margin-top:8px}.open .body{display:block}
-.map{height:300px;border-radius:10px;margin:4px 0 6px;background:#e5e7eb;z-index:0}
-.maperr{padding:14px;font-size:.8rem;color:#991b1b}
+.map{height:300px;border-radius:10px;margin:4px 0 6px;background:var(--mapbg);z-index:0}
+.maperr{padding:14px;font-size:.8rem;color:var(--err)}
 .mapbar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:.72rem;color:var(--mut);margin-bottom:6px}
 .mapbar a{display:inline-block;background:#1a73e8;color:#fff;text-decoration:none;border-radius:16px;padding:5px 10px;font-size:.74rem;font-weight:600}
 .lg i{display:inline-block;width:18px;height:0;border-top:3px solid;vertical-align:middle;margin:0 3px 0 6px}
 .lg .c{border-color:#2563eb}.lg .m{border-color:#7c3aed;border-top-style:dashed}.lg .w{border-color:#16a34a;border-top-style:dotted}.lg .g{border-color:#ea580c;border-top-style:dashed}
-.it{display:grid;grid-template-columns:82px 1fr;gap:8px;padding:8px 0;border-top:1px dashed #e5e7eb}
+.it{display:grid;grid-template-columns:82px 1fr;gap:8px;padding:8px 0;border-top:1px dashed var(--line)}
 .t{font-size:.78rem;color:var(--mut);font-variant-numeric:tabular-nums}
 .n{font-weight:600}.d{font-size:.8rem;color:var(--mut);margin-top:2px}
 .pin{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#ef4444;color:#fff;font-size:.68rem;font-weight:700;margin-right:4px;vertical-align:middle}
 .info{font-size:.74rem;margin-top:4px;display:flex;flex-wrap:wrap;gap:4px}
-.info span{background:#f1f5f9;border-radius:4px;padding:1px 6px}.info .h{background:#fef9c3}.info .kid{background:#dcfce7}
-.leg{font-size:.74rem;color:#0369a1;padding:3px 0 3px 90px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.leg a{color:#1a73e8;font-weight:600;text-decoration:none;border:1px solid #bfdbfe;border-radius:12px;padding:1px 8px}
+.info span{background:var(--soft);border-radius:4px;padding:1px 6px}.info .h{background:var(--hrs)}.info .kid{background:var(--kid)}
+.leg{font-size:.74rem;color:var(--legc);padding:3px 0 3px 90px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.leg a{color:var(--link);font-weight:600;text-decoration:none;border:1px solid var(--linkbd);border-radius:12px;padding:1px 8px}
 .tag{font-size:.62rem;padding:1px 5px;border-radius:4px;margin-left:4px;vertical-align:middle;font-weight:700}
-.tag.fix{background:#ffedd5;color:#c2410c}.tag.new{background:#dcfce7;color:#15803d}.tag.warn{background:#fee2e2;color:#b91c1c}
+.tag.fix{background:var(--tfix-bg);color:var(--tfix)}.tag.new{background:var(--tnew-bg);color:var(--tnew)}.tag.warn{background:var(--twarn-bg);color:var(--twarn)}
 .k{font-size:.66rem;color:#fff;border-radius:4px;padding:1px 5px;margin-right:4px}
-.k.f{background:#f59e0b}.k.a{background:#10b981}.k.s{background:#ec4899}.k.tr{background:#64748b}.k.h{background:#3b82f6}
+.k.f{background:#d97706}.k.a{background:#059669}.k.s{background:#db2777}.k.tr{background:#64748b}.k.h{background:#2563eb}
 .filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
-.filters button,select{border:1px solid #cbd5e1;background:#fff;border-radius:20px;padding:6px 11px;font-size:.8rem;cursor:pointer;color:var(--ink);max-width:100%}
+.filters button,select{border:1px solid var(--line);background:var(--card);border-radius:20px;padding:6px 11px;font-size:.8rem;cursor:pointer;color:var(--ink);max-width:100%}
 .filters button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
-.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.8rem}th,td{padding:7px 6px;border-bottom:1px solid #eef1f6;text-align:left;vertical-align:top}
-th{background:#f8fafc;font-size:.7rem;color:var(--mut);text-transform:uppercase}
-.md{color:#ea580c;font-weight:700}.ok{color:#16a34a;font-weight:700}
-.chk label{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f1f5f9;align-items:flex-start;font-size:.88rem}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.8rem}th,td{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--th);font-size:.7rem;color:var(--mut);text-transform:uppercase}
+.md{color:var(--md);font-weight:700}.ok{color:var(--ok);font-weight:700}
+.chk label{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);align-items:flex-start;font-size:.88rem}
 .chk input{width:20px;height:20px;flex:0 0 auto}
 .legend{font-size:.72rem;color:var(--mut);margin:2px 0 8px}
 .today{outline:3px solid #16a34a}
-#omap{height:70vh;min-height:360px;border-radius:12px;background:#e5e7eb}
+#omap{height:70vh;min-height:360px;border-radius:12px;background:var(--mapbg)}
 .num{background:#ef4444;color:#fff;border:2px solid #fff;border-radius:50%;width:26px;height:26px;line-height:22px;text-align:center;font-size:11px;font-weight:700;box-shadow:0 1px 4px rgba(0,0,0,.4)}
 .num.base{background:#2563eb}
 .zoo h4{margin:12px 0 6px;font-size:.92rem}.zoo ol,.zoo ul{margin:4px 0;padding-left:20px;font-size:.84rem}.zoo li{margin:3px 0}
 .pill{display:inline-block;font-size:.7rem;font-weight:700;border-radius:12px;padding:2px 8px}
-.pill.rec{background:#dcfce7;color:#15803d}.pill.alt{background:#fef9c3;color:#854d0e}.pill.no{background:#fee2e2;color:#991b1b}
+.pill.rec{background:var(--tnew-bg);color:var(--tnew)}.pill.alt{background:var(--hrs);color:var(--md)}.pill.no{background:var(--twarn-bg);color:var(--twarn)}
 footer{font-size:.7rem;color:var(--mut);padding:10px 14px 30px;max-width:920px;margin:auto}
 @media(max-width:520px){.it{grid-template-columns:64px 1fr}.leg{padding-left:72px}.mode{display:none}.map{height:260px}}
 </style></head><body>
 <header><h1>🇹🇼 Taiwan Family Trip — Hsinchu · Miaoli · Taipei</h1>
-<p>27 Nov – 9 Dec 2026 · TR872 / TR875 · Rev 1.5 (persimmon → 30 Nov · new 8 Dec plan)</p>
+<p>27 Nov – 9 Dec 2026 · TR872 / TR875 · Rev 1.6 (dark mode · new 29 Nov–8 Dec plan)</p>
 <div class="stats"><div class="stat"><b id="cd">–</b><span>days to go</span></div><div class="stat"><b>5</b><span>self-drive days</span></div><div class="stat"><b>6</b><span>Taipei MRT days</span></div><div class="stat"><b id="nw">–</b><span>items to check</span></div></div></header>
 <nav><button class="on" data-t="plan">📅 Itinerary</button><button data-t="ovm">🗺 Trip Map</button><button data-t="zoo">🐼 Zoo &amp; Maokong</button><button data-t="clo">🚧 Closures</button><button data-t="tix">🎟 Tickets</button><button data-t="fix">🛠 Changes</button><button data-t="chk">✅ Checklist</button></nav>
 <main>
 <section class="tab on" id="plan">
 <div class="filters" id="flt"><button class="on" data-f="all">All</button><button data-f="car">🚗 Self-drive</button><button data-f="pt">🚇 Taipei</button><button data-f="we">Weekend</button><button data-f="chg">Changed</button></div>
-<div class="legend">Tap a day to open its map and plan. Pink date = weekend. 🧭 opens Google Maps directions for that leg.</div>
+<div class="legend">Tap a day to open its map and plan. Pink date = weekend. 🧭 opens Google Maps directions for that leg. Colours follow your phone's light/dark mode.</div>
 <div id="days"></div></section>
 
-<section class="tab" id="ovm"><div class="card"><div class="filters"><select id="dsel"><option value="all">All days</option></select><span class="lg" style="font-size:.72rem;color:#6b7385"><i class="c"></i>Drive<i class="m"></i>MRT<i class="g"></i>Gondola/Tram<i class="w"></i>Walk</span></div><div id="omap"></div></div></section>
+<section class="tab" id="ovm"><div class="card"><div class="filters"><select id="dsel"><option value="all">All days</option></select><span class="lg" style="font-size:.72rem;color:var(--mut)"><i class="c"></i>Drive<i class="m"></i>MRT<i class="g"></i>Gondola/Tram<i class="w"></i>Walk</span></div><div id="omap"></div></div></section>
 
 <section class="tab" id="zoo"><div class="card zoo">
 <h4>Which option works best?</h4>
@@ -77,7 +89,7 @@ footer{font-size:.7rem;color:var(--mut);padding:10px 14px 30px;max-width:920px;m
 <tr><td><b>2) Maokong and zoo on different days</b></td><td>Maokong at sunset (~17:04). Zoo in the morning when animals are active. Both days short.</td><td>Zoo day covers both halves, but tram-up / walk-down keeps it mostly downhill</td><td><span class="pill rec">Recommended</span></td></tr>
 <tr><td>Zoo + Maokong same day</td><td>One trip</td><td>Too long for a toddler and a 70+ senior</td><td><span class="pill no">Dropped</span></td></tr>
 </tbody></table></div>
-<p style="font-size:.84rem">Planned: <b>Zoo: Thu 3 Dec</b> · <b>Maokong sunset: Mon 7 Dec</b>. 7 Dec isn't on the gondola's published December stop list (14 and 28 Dec). Recheck the day before.</p>
+<p style="font-size:.84rem">Planned: <b>Zoo: Thu 3 Dec</b> · <b>Yongkang St + Maokong sunset: Mon 7 Dec</b>. 7 Dec isn't on the gondola's published December stop list (14 and 28 Dec). Recheck the day before.</p>
 <h4>🐼 Zoo day (Thu 3 Dec): ride up, walk down</h4>
 <ol>
 <li><b>09:00</b> Enter main gate, walk ~3 min to the tram terminal (by Koala House). Ride to <b>Bird World Station</b>. Fold the stroller before boarding.</li>
@@ -87,11 +99,6 @@ footer{font-size:.7rem;color:var(--mut);padding:10px 14px 30px;max-width:920px;m
 <li><b>13:00–14:30 Lower zone:</b> Pangolin Dome → Giant Panda House → Koala House → Formosan Animal Area.</li>
 <li><b>14:30</b> Exit, MRT back to rest.</li>
 </ol>
-<h4>If you choose Option 1 (split)</h4>
-<ul>
-<li><b>Day A (gondola → Zoo South):</b> tram to Bird World (last tram 16:00): Penguin, Temperate, Bird World, Reptile, African. Exit via main gate.</li>
-<li><b>Day B (main gate):</b> Koala, Giant Panda, Formosan, Children's Zoo, Pangolin Dome, Australian Area.</li>
-</ul>
 <h4>Toddler &amp; senior notes</h4>
 <ul><li>Zoo: under 6 free; tram NT$5 adults, under 6 free.</li><li>Gondola: ages 0–5 free with a paying adult (max 2 per adult). Adults NT$180 single; EasyCard caps at NT$300 per day.</li><li>Zoo closes 17:00, last entry 16:00, exhibits close 16:30.</li></ul>
 </div></section>
@@ -114,20 +121,23 @@ sx:[24.3880,120.7744,"Shengxing Station","勝興車站"],
 lt:[24.3626,120.7768,"Longteng Bridge ruins","龍騰斷橋"],
 zy:[24.4027,120.7920,"Zhuo Ye Cottage","卓也小屋 三義"],
 ly:[24.4210,120.7790,"笠園有機農園","笠園有機農園 三義"],
-fc:[24.4870,120.7360,"Flying Cow Ranch","飛牛牧場"],
-txs:[24.4905,120.6850,"Tongxiao Shrine","通霄神社"],
-lc:[24.4880,120.6830,"梁陳吉日","梁陳吉日複合式乾燥花餐廳 通霄"],
-ps:[24.8480,121.0950,"金漢柿餅教育農園 (Xinpu)","新竹縣新埔鎮旱坑路一段501號"],
-gw:[24.6960,121.0430,"Green World Ecological Farm","綠世界生態農場"],
+fc:[24.4422,120.7401,"Flying Cow Ranch (ticket booth & car park)","飛牛牧場"],
+lc:[24.4880,120.6830,"梁陳吉日 dried-flower restaurant","梁陳吉日複合式乾燥花餐廳 通霄"],
+gw:[24.6988,121.0711,"Green World Ecological Farm","綠世界生態農場"],
 bc:[24.6930,121.0480,"Beipu Liutang Bald Cypress","北埔 六塘 落羽松"],
 qq:[24.6990,121.0565,"青青好農食","青青好農食 北埔"],
 zj:[24.6995,121.0575,"鄒記菜包","鄒記菜包 北埔"],
+nwp:[24.7060,121.1795,"Neiwan public car park (Datong Rd)","內灣老街公有停車場"],
 nw:[24.7050,121.1830,"Neiwan Old Street","內灣老街"],
-nwr:[24.7060,121.1840,"內灣圓樓客家餐廳","內灣圓樓人文客家餐廳"],
+nwt:[24.7046,121.1827,"內灣茶堂客家菜 (Zhongzheng Rd 61)","內灣茶堂客家菜"],
 lh:[24.4220,120.8640,"六合高架牛奶草莓農場","六合高架牛奶草莓農場"],
-dw:[24.4235,120.8648,"Dahu Winery","大湖酒莊"],
-jq:[24.5965,121.0005,"崛起山城南庄店","崛起山城南庄店"],
-nz:[24.5980,121.0020,"Nanzhuang Old Street","南庄老街"],
+suhu:[24.4180,120.8800,"紅色琉璃瓦草莓園 & SUHU Café (approx.)","紅色琉璃瓦草莓園 SUHU Café"],
+nzp:[24.5978,121.0008,"Nanzhuang Visitor Centre car park","南庄遊客中心 停車場"],
+nz:[24.5990,121.0000,"Nanzhuang Old Street / Osmanthus Lane","南庄老街 桂花巷"],
+wcs:[24.5983,121.0012,"屋場食事 (Hakka dinner)","屋場食事 南庄"],
+hcg:[24.8040,120.9716,"East Gate & moat park","新竹 東門城 護城河"],
+hct:[24.8046,120.9658,"City God Temple food area","新竹都城隍廟"],
+hzoo:[24.8003,120.9805,"Hsinchu Zoo & Hsinchu Park","新竹市立動物園"],
 gwz:[25.0417,121.5478,"Green World ZhongXiao (180 Zhongxiao E Rd S4)","Green World ZhongXiao 洛碁大飯店 忠孝館"],
 mmf:[25.0408,121.5290,"Moon Moon Food (Jinan)","雙月食品社 濟南店"],
 hs:[25.0441,121.5294,"Huashan 1914","華山1914文化創意產業園區"],
@@ -138,27 +148,31 @@ zaf:[24.9952,121.5862,"African Animal Area","台北市立動物園 非洲動物�
 zlo:[24.9978,121.5815,"Panda · Koala · Pangolin Dome","台北市立動物園 大貓熊館"],
 gz:[24.9960,121.5770,"Gondola – Taipei Zoo Stn","Maokong Gondola Taipei Zoo Station"],
 mk:[24.9680,121.5880,"Gondola – Maokong Stn","Maokong Gondola Maokong Station"],
+uni:[25.0406,121.5651,"Uni-President Dept Store – Dream Plaza square (Purple Wish tree)","統一時代百貨 夢廣場"],
+dp:[25.0396,121.5653,"DREAM PLAZA (Kafka's 7th Room)","DREAM PLAZA 台北"],
+xy:[25.0388,121.5660,"Shin Kong A11 gold tree (Xiangti Ave)","新光三越 A11 香堤廣場"],
+ich:[25.0370,121.5685,"ICHIRAN Taipei (Songren Rd)","ICHIRAN 台北本店 松仁路"],
 sc:[25.0965,121.5153,"Science Education Center","National Taiwan Science Education Center"],
 as:[25.0956,121.5168,"Astronomical Museum","Taipei Astronomical Museum"],
-tpac:[25.0848,121.5251,"TPAC Christmas Village","Taipei Performing Arts Center"],
+tcap:[25.0972,121.5149,"Taipei Children's Amusement Park","臺北市立兒童新樂園"],
+netz:[25.0416,121.5452,"NET Zhongxiao Flagship (59-61 Zhongxiao E Rd S4)","NET 忠孝旗艦店"],
+netd:[25.0428,121.5460,"NET Da'an (50 Da'an Rd Sec 1)","NET 大安路一段50號"],
+sogo:[25.0418,121.5437,"SOGO Zhongxiao (lunch)","SOGO 忠孝館"],
+gc:[25.0440,121.5600,"Far Eastern Garden City (Taipei Dome)","遠東 Garden City 大巨蛋"],
+msn:[25.0430,121.5550,"Master Spicy (Yanji)","麻辣大師 延吉"],
 dh:[25.0560,121.5100,"Dihua Old Street","Dihua Street"],
 dw2:[25.0563,121.5079,"Dadaocheng Wharf","大稻埕碼頭"],
 rs:[25.0570,121.5101,"Rice & Shine","Rice & Shine 迪化"],
-zs:[25.0528,121.5212,"Zhongshan (Linear Park · Chifeng St · Eslite Nanxi)","中山 心中山線形公園"],
+zs:[25.0528,121.5212,"Zhongshan (Linear Park · Chifeng St)","中山 心中山線形公園"],
+sam:[25.0533,121.5207,"SAMO ONDOH Zhongshan (9 Chifeng St)","SAMO ONDOH 台北中山門市"],
 ck:[25.0530,121.5225,"COOKIE886","COOKIE886 中山"],
-bq:[25.0128,121.4648,"Banqiao Christmasland","新北市政府 歡樂耶誕城"],
+bq:[25.0128,121.4648,"Banqiao Christmasland + German market","新北市政府 歡樂耶誕城"],
+yk:[25.0330,121.5297,"Yongkang Street (Dongmen Exit 5)","永康街"],
+dap:[25.0300,121.5355,"Daan Forest Park playground","Daan Forest Park"],
 lst:[25.0372,121.4999,"Lungshan Temple","Lungshan Temple"],
-lsd:[25.0440,121.5062,"Lao Shandong Noodles","老山東牛肉家常麵店"],
 xm:[25.0421,121.5078,"Ximending / Red House","Ximending"],
-cd:[25.0512,121.5640,"Chia Te Pineapple Cake","佳德糕餅 南京東路"],
-ich:[25.0370,121.5685,"ICHIRAN Taipei","ICHIRAN 台北本店 松仁路"],
-xy:[25.0388,121.5660,"Xinyi Christmas lights (Shin Kong A11)","新光三越 A11 香堤廣場"],
-t101:[25.0340,121.5645,"Taipei 101 (Din Tai Fung B1)","Din Tai Fung Taipei 101"],
-obs:[25.0336,121.5650,"Taipei 101 Observatory","Taipei 101 Observatory"],
-msn:[25.0430,121.5550,"Master Spicy (Yanji)","麻辣大師 延吉"],
-gc:[25.0440,121.5600,"Far Eastern Garden City","遠東 Garden City 大巨蛋"],
-dap:[25.0300,121.5355,"Daan Forest Park","Daan Forest Park"],
-netz:[25.0416,121.5452,"NET Zhongxiao Flagship (59-61 Zhongxiao E Rd S4)","NET 忠孝旗艦店"]};
+lsd:[25.0440,121.5062,"Lao Shandong Noodles","老山東牛肉家常麵店"],
+cd:[25.0512,121.5640,"Chia Te Pineapple Cake","佳德糕餅 南京東路"]};
 /* item: [time,kind,name,note,tag,hours,ticket,kid,pin]; leg: ["→",text,mode car|mrt|walk|ride] */
 const D=[
 {date:"2026-11-27",dow:"Fri",title:"Fly in, dinner at airport, transfer to Hsinchu",m:"car",it:[
@@ -184,53 +198,72 @@ const D=[
 ["17:30–18:30","f","笠園有機農園","Organic farm dinner","","Check hours","","","ly"],
 ["→","Drive 66 km · ~55 min","car"],
 ["19:30","h","SOL HOTEL","","","","","","sol"]]},
-{date:"2026-11-29",dow:"Sun",title:"Flying Cow Ranch & Tongxiao",m:"car",it:[
-["09:00","h","Depart SOL HOTEL","","","","","","sol"],
-["→","Drive ~60 km · ~60 min","car"],
-["10:00–15:30","a","Flying Cow Ranch","Milking 11:00/14:15 · duck parade 13:45. Lunch 犇牛牛火鍋 inside. Nature trail closed","warn","08:00–19:00","Adult NT$280 · age 3–K NT$160","Under 3 free","fc"],
-["→","Drive ~10 km · ~15 min","car"],
-["15:45–16:45","a","Tongxiao Shrine","Sunset views","","Open-air","Free","","txs"],
-["→","Drive ~1 km","car"],
-["17:30–18:30","f","梁陳吉日 dried-flower restaurant","","","Check hours","","","lc"],
+{date:"2026-11-29",dow:"Sun",title:"Flying Cow Ranch (arrive 09:15)",m:"car",it:[
+["08:10","h","Depart SOL HOTEL","Leave by 08:10 to arrive 09:15 (~60 km, ~60 min + buffer)","fix","","","","sol"],
+["→","Drive ~60 km · ~60 min via Fwy 3 Tongxiao exit, County Rd 121","car"],
+["09:15","a","Arrive Flying Cow Ranch","Pay entry + car parking at the booth, short uphill walk from car park. Redeem free milk cup with ticket","fix","Booth 07:00–19:00","Adult NT$280 · senior 65+ NT$160 · age 3–K NT$160","Under 3 free","fc"],
+["09:30","a","🍼 Feed the calves (餵小牛喝奶)","At 'Cow Mama's House'. Be there 15 min early; bottles are paid & limited","new","Daily 09:30 & 15:00","Bottle extra","Great for toddler (with adult)",""],
+["10:00","a","🦆 Duck parade (鴨BB大遊行)","Most popular show. Ring the bell, ducks run out","new","Daily 10:00 & 13:45 (+16:00 weekends)","Free","",""],
+["10:20–11:00","a","Sheep & rabbit areas, grassland playground","Honesty-box feed NT$10 a pack; sandpit & tractor play area","new","","Feed NT$10","Rabbits fed through mesh: toddler-safe",""],
+["11:00","a","🐄 Milking demo (擠牛奶)","Watch only for toddler: hands-on needs ≥130 cm","new","Daily 07:00 · 11:00 · 14:15 · 17:00","Free","Hands-on ≥130 cm",""],
+["11:15","a","🐴 Mini-horse ride (weekends)","Weekend-only activity; check sign-up at the ranch","new","Weekends","Extra","Check age/height on site",""],
+["11:45–12:45","f","犇牛牛火鍋 (milk hotpot, inside ranch)","Mild, toddler-friendly","","11:00–20:00","","",""],
+["12:45–13:30","a","DIY: ice-cream shaking or painted cow","Sign up at DIY centre 10 min before","new","Ice cream 12:30 · 14:30 · 16:30; painting 12:30–16:30","NT$180 / 2 pax · NT$150","",""],
+["13:45","a","🦆 Duck parade (2nd show)","Skip if toddler needs a nap","","","","",""],
+["14:00–15:15","a","Rest, white pudding & shop","Buy 飛牛白布丁 / baked pudding","","","","",""],
+["15:00","a","🍼 Calf feeding (2nd round)","Optional","","","","",""],
+["→","Drive ~10 km · ~20 min","car"],
+["15:45–17:15","f","梁陳吉日 dried-flower restaurant (early dinner)","Moved earlier; Tongxiao Shrine removed","fix","Check hours","","","lc"],
 ["→","Drive 51.5 km · 48 min","car"],
-["19:30","h","SOL HOTEL","","","","","","sol"]]},
-{date:"2026-11-30",dow:"Mon",title:"Persimmons, Green World, Beipu & Neiwan",m:"car",it:[
-["08:25","h","Depart SOL HOTEL","","","","","","sol"],
-["→","Drive ~20 km · ~35 min (northeast to Xinpu)","car"],
-["09:00–09:45","a","金漢柿餅教育農園 (persimmon drying)","Moved from 2 Dec. Arrive at opening: drying racks, tasting, swings. Small car park (~12 cars)","fix","Daily 09:00–17:00","Free entry","Flat yard, stroller OK","ps"],
-["→","Drive ~30 km · ~40 min (estimate) south to Beipu","car"],
-["10:30–12:45","a","Green World Ecological Farm","Alpacas, birds, butterflies. Weekday, fewer crowds","fix","08:30–17:30 (tickets till 16:00)","Adult NT$480 · child NT$350","≤90 cm or under 3 free","gw"],
-["→","Drive 3.6 km · 9 min","car"],
-["13:00–13:20","a","Beipu Liutang Bald Cypress","Quick photo stop","","Open-air","Free","","bc"],
-["→","Drive 5.1 km · 13 min","car"],
-["13:35–14:30","f","青青好農食","Monday: check FB hours","warn","Per FB","","","qq"],
+["18:15","h","SOL HOTEL","Early night after a full day","","","","","sol"]]},
+{date:"2026-11-30",dow:"Mon",title:"Green World, Beipu & Neiwan",m:"car",it:[
+["08:30","h","Depart SOL HOTEL","Persimmon farm removed","fix","","","","sol"],
+["→","Drive ~25 km · ~35 min","car"],
+["09:05","a","Green World Ecological Farm – enter","Buy tram card (NT$200 for 5 rides). Ride up to Butterfly Park first, then walk downhill","fix","08:30–17:30 (tickets till 16:00)","Adult NT$480 · 65+ NT$400 · child NT$350","≤90 cm or under 3 free (tram too)","gw"],
+["10:30","a","🦙 Alpaca walk (Green Field) + 🐦 bird-park feeding","Both at 10:30 – choose alpacas for toddler","new","Alpacas 10:30 · 13:00 · 14:30","","",""],
+["11:00","a","🦜 Animal eco talk (parrots, sloth)","~20 min; can't leave mid-show","new","11:00 · 13:30 · 15:00","","",""],
+["11:30–12:15","a","Bee Planet, cactus park, swan lake","Exit","","","","",""],
+["→","Drive ~4 km · 9 min","car"],
+["12:25–12:45","a","Beipu Liutang Bald Cypress","Quick photo stop","","Open-air","Free","","bc"],
+["→","Drive ~5 km · 13 min","car"],
+["13:00–14:00","f","青青好農食","Monday: check FB hours","warn","Per FB","","","qq"],
 ["→","Walk 200 m","walk"],
-["14:30–14:50","f","鄒記菜包 (take-away)","","","Closes 16:00","","","zj"],
+["14:00–14:20","f","鄒記菜包 (take-away)","","","Closes 16:00","","","zj"],
 ["→","Drive 16.7 km · 30 min","car"],
-["15:20–17:15","a","Neiwan Old Street","Suspension bridge, old station","","","Free","","nw"],
-["→","Drive 0.8 km","car"],
-["17:30–18:30","f","內灣圓樓客家餐廳","","","Check hours","","","nwr"],
+["14:50","tr","Park at Neiwan public car park (Datong Rd)","~90 spaces, 5 min walk. Weekday = easy. Free lots on Zhongshan St Sec 2 (~350 m) as backup","new","24 h","NT$30/h, weekday cap NT$90","","nwp"],
+["→","Walk ~5 min","walk"],
+["15:00–17:00","a","Neiwan Old Street + suspension bridge","Monday: ~5–7 of 10 shops open (many rest Wed/Thu). Shops close ~18:00","","Shops ~10:00–18:00","Free","","nw"],
+["→","Walk 2 min","walk"],
+["17:00–18:15","f","內灣茶堂客家菜 (dinner)","Set menus 4 dishes + soup from NT$500, free tea & lei-cha. Replaces 內灣圓樓 (closes 18:00 weekdays)","fix","10:30–19:30 (closed Wed)","","","nwt"],
 ["→","Drive 31 km · 39 min","car"],
-["19:15","h","SOL HOTEL","","","","","","sol"]]},
-{date:"2026-12-01",dow:"Tue",title:"Dahu strawberries & Nanzhuang",m:"car",it:[
+["19:00","h","SOL HOTEL","","","","","","sol"]]},
+{date:"2026-12-01",dow:"Tue",title:"Strawberries, SUHU Café & Nanzhuang",m:"car",it:[
 ["08:45","h","Depart SOL HOTEL","","","","","","sol"],
 ["→","Drive ~60 km · ~55–60 min","car"],
 ["09:45–11:15","a","六合高架牛奶草莓農場","Early season; call 037-993521 the day before","warn","08:00–18:30","~NT$700 per catty","Raised beds 90–120 cm","lh"],
-["→","~2 min","car"],
-["11:15–12:00","a","Dahu Winery","","","","Free","","dw"],
-["→","Drive 31 km · 47 min","car"],
-["12:45–13:45","f","崛起山城南庄店","","","Check hours","","","jq"],
+["→","Drive ~10–15 min into the hills (narrow lane)","car"],
+["11:30–13:00","f","紅色琉璃瓦 & SUHU Café (lunch)","Strawberry café: pizza, quiche, strawberry desserts. Book 2-h slot online (inline) & pay NT$300 pp deposit. Older info says closed Tue/Wed – now 'irregular' in season: CHECK FB before booking","warn","Café 09:30–17:30 (last order 17:00)","Min spend NT$300 (7+) · NT$150 (3–6) · under 3 free","Elevated beds; kids' toilet; lawn play area","suhu"],
+["→","Drive ~32 km · ~50 min","car"],
+["13:50","tr","Park at Nanzhuang Visitor Centre car park","~200 spaces, 3–5 min walk. Weekday: easy","new","","Weekday usually free / low","","nzp"],
 ["→","Walk 5 min","walk"],
-["13:45–16:00","a","Nanzhuang Old Street","","","","Free","","nz"],
-["→","Drive 38 km · 49 min","car"],
-["16:50","h","SOL HOTEL","","","","","","sol"]]},
-{date:"2026-12-02",dow:"Wed",title:"Easy morning → car return → Taipei",m:"pt",it:[
-["08:00–10:00","h","Slow breakfast & pack at SOL HOTEL","Persimmon farm moved to 30 Nov, so no rush. Ask hotel to hold bags until 15:00","fix","","","","sol"],
+["14:00–16:45","a","Nanzhuang Old Street: Osmanthus Lane, old post office, washing pool","Osmanthus iced tangyuan, egg rolls. Many stalls close ~17:00–17:30","","~09:00–17:30","Free","","nz"],
+["→","Walk 3 min","walk"],
+["17:00–18:15","f","屋場食事 (Hakka dinner)","Refined Hakka in an old house, near the post office. Reserve. (粗茶淡飯 & 老金龍 are closed Tue)","new","Weekdays 11:00–14:30 / 17:00–19:30 (closed Thu)","","","wcs"],
+["→","Drive 38 km · ~50 min","car"],
+["19:10","h","SOL HOTEL","Dahu Winery removed","fix","","","","sol"]]},
+{date:"2026-12-02",dow:"Wed",title:"Car return → Hsinchu city → Taipei",m:"pt",it:[
+["08:00–10:00","h","Slow breakfast & pack at SOL HOTEL","Ask hotel to hold bags until 15:00","","","","","sol"],
 ["10:15","tr","Refuel near hotel","","","","","",""],
 ["→","Drive ~1 km","car"],
 ["10:45–11:00","tr","Return rental car","131-133 Zhonghua Rd Sec 2 (deadline 11:00)","","","","","rent"],
-["→","Walk / taxi ~1 km","walk"],
-["11:15–14:45","f","Lunch & rest, central Hsinchu","","","","","","sol"],
+["→","Walk ~8 min","walk"],
+["11:10–11:45","a","East Gate & moat riverside park","Flat, stroller-friendly; next to the hotel","new","Open-air","Free","","hcg"],
+["→","Walk ~8 min","walk"],
+["11:50–12:50","f","Lunch – City God Temple food area","Options: 柳家肉燥飯 (10:30–22:00), 鴨肉許 (10:00–02:00); or 東門米粉攤 in Dongmen Market (11:00–14:00)","new","","","","hct"],
+["→","Taxi ~5 min","car"],
+["13:00–14:20","a","Hsinchu Zoo & Hsinchu Park","Oldest zoo in Taiwan, rebuilt 2019 – small, shady, easy for toddler & senior. Closed Mon (Wed OK)","new","Check hours","Check price","",""+"hzoo"],
+["→","Taxi ~5 min back to hotel","car"],
+["14:30–15:00","h","Collect bags at SOL HOTEL","","","","","","sol"],
 ["→","Tripool 15:00 · ~1.5 h","car"],
 ["16:30","h","Check in Green World ZhongXiao","MRT Zhongxiao Dunhua; entrance in rear alley","","","","","gwz"],
 ["→","Blue line 2 stops → Zhongxiao Xinsheng, walk 8 min","mrt"],
@@ -239,39 +272,60 @@ const D=[
 ["18:45–19:45","a","Huashan 1914 Creative Park","Evening lights","","","Free","","hs"],
 ["→","Blue line 2 stops","mrt"],
 ["20:00","h","Hotel","","","","","","gwz"]]},
-{date:"2026-12-03",dow:"Thu",title:"Taipei Zoo (tram up, walk down) + Xinyi Christmas lights",m:"pt",it:[
+{date:"2026-12-03",dow:"Thu",title:"Taipei Zoo + Xinyi Christmas lights & Dream Plaza",m:"pt",it:[
 ["08:20","h","Leave hotel","","","","","","gwz"],
 ["→","Blue 1 stop → Zhongxiao Fuxing, Brown line → Taipei Zoo · ~35 min","mrt"],
 ["09:00","a","Taipei Zoo main gate","Weekday, fewer crowds","","09:00–17:00 (last entry 16:00)","Adult NT$100","Under 6 free","zoo"],
 ["→","Walk 3 min to tram terminal","walk"],
-["09:10","tr","Zoo tram → Bird World Station","First hour = shortest queue. Fold stroller","","","NT$5 adult","Under 6 free","ztr"],
+["09:10","tr","Zoo tram → Bird World Station","Fold stroller","","","NT$5 adult","Under 6 free","ztr"],
 ["→","Tram ride uphill","ride"],
 ["09:20–11:15","a","Upper zone: Penguin · Temperate · Bird World · Reptile","","","","","","zbw"],
 ["→","Walk downhill ~10 min","walk"],
 ["11:15–12:00","a","African Animal Area","","","","","","zaf"],
 ["12:00–13:00","f","Lunch + rest (zoo restaurant)","","","","","",""],
 ["→","Walk downhill","walk"],
-["13:00–14:30","a","Lower zone: Pangolin Dome · Giant Panda · Koala · Formosan","Skip Formosan if tired","","","","","zlo"],
-["→","Exit · MRT back ~35 min","mrt"],
-["15:15–17:00","h","Rest at hotel","Nap for toddler and senior","","","","","gwz"],
-["→","Blue line 2 stops → Taipei City Hall","mrt"],
-["17:15–18:30","a","🎄 Xinyi Christmas lights","Shin Kong A11 20 m gold tree; show every 15 min from 16:30, snow on :00 and :30","","Show 16:30–22:00","Free","","xy"],
-["→","Walk ~8 min","walk"],
-["18:45–19:45","f","Din Tai Fung (Taipei 101 B1)","Get a queue number early","","Check hours","","Kids' chairs","t101"],
-["→","Taxi ~10 min","car"],
-["20:15","h","Hotel","","","","","","gwz"]]},
-{date:"2026-12-04",dow:"Fri",title:"Science + Astronomy museums + Christmas Village",m:"pt",it:[
+["13:00–14:30","a","Lower zone: Pangolin Dome · Giant Panda · Koala · Formosan","","","","","","zlo"],
+["→","MRT back ~35 min","mrt"],
+["15:15–17:00","h","Rest at hotel","","","","","","gwz"],
+["→","Blue line 2 stops → Taipei City Hall, Exit 2","mrt"],
+["17:20–18:20","a","🎄 Uni-President 'Prague' lights + 14 m Purple Wish tree","Lights on 17:30. Tree show 18:00–21:00 on the hour & half-hour; astronomical-clock show hourly 18:00–22:00","new","Until 3 Jan","Free","",""+"uni"],
+["→","Walk 2 min","walk"],
+["18:20–18:45","a","🎄 DREAM PLAZA – 'Kafka's 7th Room'","Walk-in 2-storey upside-down house sculpture","new","Mall 11:00–21:30 (Thu)","Free","Stairs to upper floor","dp"],
+["→","Walk ~5 min along Xiangti Ave (tree lights)","walk"],
+["18:50–19:10","a","🎄 Shin Kong A11 champagne-gold tree","Light & 'snow' show every 15 min from 16:30","","16:30–22:00","Free","","xy"],
+["→","Walk ~5 min","walk"],
+["19:15–20:15","f","ICHIRAN Taipei (Songren Rd)","Replaces Din Tai Fung. Kids' ramen available","fix","Mon–Thu 10:00–05:00","","Kids' ramen","ich"],
+["→","Taxi ~10 min or Blue 2 stops","car"],
+["20:30","h","Hotel","Citywide 'Taipei Christmas' lights around City Hall start next day (4 Dec)","","","","","gwz"]]},
+{date:"2026-12-04",dow:"Fri",title:"Science + Astronomy museums + Children's Amusement Park",m:"pt",it:[
 ["08:40","h","Leave hotel","","","","","","gwz"],
 ["→","Blue → Taipei Main → Red → Shilin, short taxi · ~45 min","mrt"],
-["09:20–12:30","a","National Taiwan Science Education Center","Lunch at food court. SkyCycle paused 12:00–13:00","","Tue–Fri 09:00–17:00","Adult NT$120","≤115 cm free","sc"],
+["09:20–12:00","a","National Taiwan Science Education Center","Lunch at food court. SkyCycle paused 12:00–13:00","","Tue–Fri 09:00–17:00","Adult NT$120","≤115 cm free","sc"],
 ["→","Walk 3 min","walk"],
-["13:00–15:30","a","Taipei Astronomical Museum","","","09:00–17:00","NT$40 · ride NT$70","Under 6 free · ride height: check","as"],
-["→","Taxi ~5 min","car"],
-["15:45–18:00","a","🎄 Christmas Village @ TPAC (outdoor)","4–6 Dec only. Dinner at the village stalls","","13:00–19:00","Free","","tpac"],
-["→","Jiantan → Red → Taipei Main → Blue · ~35 min","mrt"],
+["12:15–14:00","a","Taipei Astronomical Museum","","","09:00–17:00 (Mon closed)","NT$40 · ride NT$70","Under 6 free","as"],
+["→","Walk 3 min","walk"],
+["14:15–16:45","a","🎠 Taipei Children's Amusement Park","Replaces TPAC Christmas Village. Carousel, Ferris wheel, monorail, free sandpit & indoor ball pit (socks needed). Weekday = short queues","new","Tue–Fri 09:00–17:00","Entry NT$30; ≤6 & 65+ free. Rides NT$20–30 (EasyCard)","<85 cm or under 2 ride free with adult; many rides need ≥90 cm","tcap"],
+["→","Taxi to Jiantan, Red → Blue · ~40 min","mrt"],
+["17:30–18:30","f","Dinner near hotel","Easy night after a full day","","","","",""],
 ["18:45","h","Hotel","","","","","","gwz"]]},
-{date:"2026-12-05",dow:"Sat",title:"Dihua Street, Zhongshan & Banqiao Christmasland",m:"pt",it:[
-["09:00","h","Leave hotel","","","","","","gwz"],
+{date:"2026-12-05",dow:"Sat",title:"NET shopping, Garden City & Master Spicy",m:"pt",it:[
+["10:50","h","Leave hotel","","","","","","gwz"],
+["→","Taxi ~8 min (or Blue 2 stops → Zhongxiao Fuxing)","car"],
+["11:00–11:45","s","NET Zhongxiao Flagship","3 floors incl. kids & baby; rest area with charging","fix","11:00–22:00","","Kids & baby floors","netz"],
+["→","Walk ~4 min","walk"],
+["11:45–12:30","s","NET Da'an (50 Da'an Rd Sec 1)","Clearance/outlet-style store","fix","11:30–21:30","","","netd"],
+["→","Taxi ~8 min with shopping bags","car"],
+["12:40","h","Drop shopping at hotel","","fix","","","","gwz"],
+["12:50–13:50","f","Lunch near hotel","e.g. Dunhua/Zhongxiao lanes or SOGO food hall (Blue 1 stop)","new","Check hours","","",""],
+["14:00–15:00","h","Rest","Toddler & senior nap","","","","","gwz"],
+["→","Blue 1 stop → Sun Yat-sen Memorial Hall, walk ~8 min","mrt"],
+["15:15–17:20","s","Far Eastern Garden City (Taipei Dome)","5F THANQ PARK play area; shops","fix","Fri–Sat 11:00–22:00","","5F play area","gc"],
+["→","Walk ~8 min","walk"],
+["17:30–18:45","f","Master Spicy Noodle (Yanji)","Spicy; ask for plain broth for toddler","fix","17:30–21:00 dinner","","","msn"],
+["→","Blue 1 stop","mrt"],
+["19:00","h","Hotel","","","","","","gwz"]]},
+{date:"2026-12-06",dow:"Sun",title:"Dihua, Zhongshan, SAMO ONDOH & Banqiao Christmasland",m:"pt",it:[
+["09:00","h","Leave hotel","Moved here from 5 Dec","fix","","","","gwz"],
 ["→","Taxi ~20 min (easier for senior) or MRT Blue→Ximen, Green→Beimen","car"],
 ["09:30–11:15","s","Dihua Old Street","Xiahai City God Temple, dried goods","","","","","dh"],
 ["→","Walk 5 min","walk"],
@@ -279,112 +333,102 @@ const D=[
 ["→","Walk 6 min","walk"],
 ["12:00–13:00","f","Rice & Shine","","","Check hours","","","rs"],
 ["→","Taxi ~8 min","car"],
-["13:30–15:30","s","Zhongshan: Linear Park · Chifeng St · Eslite Nanxi","Flat, stroller-friendly; cafés for senior rest","","","","","zs"],
+["13:15–14:30","s","Zhongshan: Linear Park · Chifeng St","Flat, stroller-friendly; cafés for senior rest","","","","","zs"],
+["→","Walk 2 min","walk"],
+["14:30–15:15","s","SAMO ONDOH Zhongshan store","9 Chifeng St, near Zhongshan Exit 5. Korean bag brand","new","Sat–Sun 12:00–22:00","","","sam"],
 ["→","Walk 3 min","walk"],
-["15:30–16:00","s","COOKIE886","","","Check hours","","","ck"],
+["15:15–15:40","s","COOKIE886","","","Check hours","","","ck"],
 ["→","Red 1 stop → Taipei Main, Blue → Fuzhong · ~25 min","mrt"],
-["16:45–19:30","a","🎄 Banqiao Christmasland + German Christmas Market","Market 4–6 Dec; dinner at market stalls","","Sat 11:00–22:00","Free","","bq"],
+["16:15–19:00","a","🎄 Banqiao Christmasland + German Christmas Market","Last day of the market; dinner at stalls","","6 Dec 11:00–21:00","Free","","bq"],
 ["→","Blue line direct ~25 min","mrt"],
-["20:00","h","Hotel","","","","","","gwz"]]},
-{date:"2026-12-06",dow:"Sun",title:"Lungshan, Ximending & pineapple cakes",m:"pt",it:[
-["09:30","h","Leave hotel","","","","","","gwz"],
-["→","Blue line direct → Longshan Temple · ~15 min","mrt"],
-["09:50–10:45","a","Lungshan Temple","","","","Free","","lst"],
-["→","Blue 1 stop → Ximen","mrt"],
-["11:00–11:45","f","Lao Shandong Noodles","Early lunch beats the queue","","Check hours","","","lsd"],
-["→","Walk 3 min","walk"],
-["11:45–14:00","s","Ximending + Red House","","","","","","xm"],
-["→","Green line direct → Nanjing Sanmin · ~15 min","mrt"],
-["14:30–15:15","s","Chia Te Pineapple Cake","Sunday queue; pre-order possible","","08:30–20:30","","","cd"],
-["→","Taxi ~10 min","car"],
-["15:45–17:30","h","Rest at hotel","NET moved to 8 Dec (both NET stores are by the hotel)","fix","","","","gwz"],
-["→","Blue 2 stops → City Hall, walk 8 min","mrt"],
-["18:00–19:00","f","ICHIRAN Taipei (Songren Rd)","Kids' ramen","","Fri–Sun 24 h","","","ich"],
-["→","Blue 2 stops","mrt"],
 ["19:30","h","Hotel","","","","","","gwz"]]},
-{date:"2026-12-07",dow:"Mon",title:"Garden City + Maokong sunset",m:"pt",it:[
-["10:40","h","Leave hotel","","","","","","gwz"],
-["→","Blue 1 stop → Sun Yat-sen Memorial Hall","mrt"],
-["11:00–11:30","s","Far Eastern Garden City (Taipei Dome)","","","Sun–Thu 11:00–21:30","","5F THANQ PARK play area","gc"],
-["→","Walk ~8 min","walk"],
-["11:30–12:30","f","Master Spicy Noodle (Yanji)","Spicy; plain broth for toddler","","11:30–14:30","","","msn"],
-["→","Walk ~8 min","walk"],
-["12:45–13:45","s","Garden City: 5F play area + shops","","","","","","gc"],
-["→","Blue 1 stop","mrt"],
-["14:00–14:40","h","Rest at hotel","","","","","","gwz"],
-["→","Blue 1 stop → Zhongxiao Fuxing, Brown → Taipei Zoo, walk 350 m · ~40 min","mrt"],
-["15:30","tr","Maokong Gondola up (~30 min)","7 Dec not on published stop list; recheck day before","warn","Weekdays 09:00–21:00","NT$180 single / NT$300 day cap","0–5 free with adult","gz"],
+{date:"2026-12-07",dow:"Mon",title:"Yongkang Street + Maokong sunset",m:"pt",it:[
+["10:30","h","Leave hotel","","","","","","gwz"],
+["→","Blue 1 stop → Zhongxiao Xinsheng, Orange 1 stop → Dongmen Exit 5 · ~15 min","mrt"],
+["10:50–13:15","f","Yongkang Street – brunch & lunch crawl","Scallion pancake, beef noodles, mango shaved ice, gift shops in the alleys. Some shops rest on Mondays","new","Most shops open for lunch","","Narrow pavements: light stroller","yk"],
+["→","Walk ~12 min (or Red 1 stop → Daan Park)","walk"],
+["13:30–14:30","a","Daan Forest Park playground","Run-around time + benches before the long evening","new","24 h","Free","Inclusive playground","dap"],
+["→","Red line Daan Park → Da'an, Brown line → Taipei Zoo, walk 350 m · ~35 min","mrt"],
+["15:15","tr","Maokong Gondola up (~30 min)","7 Dec not on published stop list; recheck day before","warn","Weekdays 09:00–21:00","NT$180 single / NT$300 day cap","0–5 free with adult","gz"],
 ["→","Gondola ~30 min","ride"],
-["16:00–18:15","a","Maokong teahouse · sunset ~17:04 · dinner","Sit-down tea with city view, then dinner","","","","","mk"],
-["18:30","tr","Gondola down (night view)","Cabins unlit for city lights","","","","","mk"],
+["15:45–18:15","a","Maokong teahouse · sunset ~17:04 · dinner","Sit-down tea with city view, then dinner","","","","","mk"],
+["18:30","tr","Gondola down (night view)","","","","","","mk"],
 ["→","Gondola ~30 min, then Brown → Blue · ~40 min","ride"],
 ["19:45","h","Hotel","","","","","","gwz"]]},
-{date:"2026-12-08",dow:"Tue",title:"Taipei 101, park & NET near hotel → airport",m:"pt",it:[
-["09:45","h","Late checkout or bag storage at Green World ZhongXiao","Ask hotel to hold bags until 20:00","warn","","","","gwz"],
-["→","Taxi ~10 min (or Blue 2 stops → City Hall + walk 10 min)","car"],
-["10:15–11:45","a","Taipei 101 Observatory (89F/88F)","Weekday morning = quietest. Book online. Damper ball on 88F","new","Opens 10:00 or 11:00 (check official site) till 21:00","Adult NT$600 · concession NT$540","Under 115 cm free with parent","obs"],
-["11:45–12:45","f","Lunch at Taipei 101 B1 food court","Many non-fried options","new","","","",""],
+{date:"2026-12-08",dow:"Tue",title:"Lungshan, Ximending & pineapple cakes → airport",m:"pt",it:[
+["09:30","h","Late checkout or bag storage at Green World","Ask hotel to hold bags until 20:00. No Taipei 101 / Din Tai Fung","warn","","","","gwz"],
+["→","Blue line direct → Longshan Temple · ~15 min","mrt"],
+["09:50–10:40","a","Lungshan Temple","Calm on a weekday morning","fix","","Free","","lst"],
+["→","Blue 1 stop → Ximen","mrt"],
+["10:55–11:40","s","Ximending + Red House","Shops open ~11:00","fix","","","","xm"],
+["→","Walk 3 min","walk"],
+["11:40–12:30","f","Lao Shandong Noodles (early lunch)","Beat the queue","fix","Check hours","","","lsd"],
+["→","Green line direct Ximen → Nanjing Sanmin · ~15 min","mrt"],
+["13:00–13:40","s","Chia Te Pineapple Cake","Weekday = short queue; last souvenirs","fix","08:30–20:30","","","cd"],
 ["→","Taxi ~10 min","car"],
-["13:00–14:00","h","Back to hotel: checkout / rest","","","","","","gwz"],
-["→","Taxi ~8 min","car"],
-["14:15–15:45","a","Daan Forest Park","Big flat park, playground, pond. Benches for senior","new","Open 24 h","Free","Toddler playground","dap"],
-["→","Taxi ~8 min","car"],
-["16:00–17:30","s","NET Zhongxiao Flagship","3 floors incl. kids & baby; rest area with charging. NET Da'an clearance outlet (Da'an Rd Sec 1 #50) is a few minutes' walk","new","11:00–22:00","","Kids & baby floors","netz"],
-["→","Walk ~3 min","walk"],
-["17:30–18:45","f","Dinner at SOGO Zhongxiao","Restaurants/food hall next to NET","new","Check hours","","",""],
-["→","Walk ~10 min back along Zhongxiao E Rd","walk"],
+["14:00–17:00","h","Rest / pack at hotel","Long night ahead (00:15 flight)","","","","","gwz"],
+["17:15–18:45","f","Dinner near hotel","Relaxed sit-down dinner within walking distance","","","","",""],
 ["19:00–19:55","h","Collect bags, freshen up","","","","","","gwz"],
-["20:00","tr","Tripool pickup at Green World ZhongXiao","Booked from hotel","fix","","","",""],
+["20:00","tr","Tripool pickup at Green World ZhongXiao","Booked from hotel","","","","",""],
 ["→","Tripool ~45–50 min to Taoyuan T1","car"],
 ["~20:50","tr","Taoyuan T1 – check in TR875","Departs 00:15","","","","","tpe"]]},
 {date:"2026-12-09",dow:"Wed",title:"TR875 → Singapore",m:"pt",it:[
 ["00:15","tr","TR875 TPE → SIN","Scheduled arrival 04:50","","","","","tpe"]]}];
 const CLO=[
 ["29 Nov","Flying Cow Ranch","Stream repair works until 31 Dec: nature trail closed","<span class=md>Partial</span>"],
-["30 Nov (Mon)","Maokong Gondola","Monday maintenance stop","<span class=ok>Not planned that day</span>"],
-["30 Nov","金漢柿餅","Drying racks depend on weather and harvest","<span class=md>Call 03-589-2680</span>"],
-["4 Dec","Science Center","9F renovation; SkyCycle paused 12:00–13:00","<span class=md>Partial</span>"],
-["7 Dec (Mon)","Maokong Gondola","Not on the published Dec stop list (14 and 28 Dec)","<span class=md>Recheck day before</span>"],
-["7 Dec (Mon)","Taipei Zoo","1st Monday: Giant Panda House closed","<span class=ok>Avoided: zoo on Thu</span>"],
-["7 Dec (Mon)","Science Center, Astronomical Museum","Closed every Monday","<span class=ok>Avoided</span>"],
-["Any day","Maokong Gondola","Stops for strong wind, lightning, quake ≥4 or typhoon","Backup: Taipei 101 observatory"],
+["30 Nov (Mon)","Neiwan Old Street","Weekday: ~50–70% of shops open; many rest Wed/Thu","<span class=ok>Mon is fine</span>"],
+["30 Nov","內灣圓樓","Closes 18:00 on weekdays","<span class=ok>Dinner moved to 內灣茶堂</span>"],
+["1 Dec (Tue)","SUHU Café","Older info: closed Tue/Wed; now 'irregular' in season; may close if fruit runs out","<span class=md>Check FB & book</span>"],
+["1 Dec (Tue)","粗茶淡飯 / 老金龍 (Nanzhuang)","Closed on Tuesday","<span class=ok>Avoided: 屋場食事</span>"],
 ["1 Dec","Dahu strawberries","Early season; farm may pause after rain","<span class=md>Call ahead</span>"],
-["4–6 Dec","TPAC Christmas Village / Banqiao German market","These 3 days only","<span class=ok>Planned 4 &amp; 5 Dec</span>"]];
-const MAN=["Rental office ↔ SOL HOTEL walking distance","SOL HOTEL bag storage until 15:00 on 2 Dec","Hakka restaurants (吉祥樓, 笠園, 梁陳吉日, 內灣圓樓, 崛起山城): weekly rest day","青青好農食 Monday hours","Drive time 金漢柿餅 → Green World (estimate ~40 min)","Maokong Gondola running on Mon 7 Dec","Rice & Shine, Lao Shandong, COOKIE886, Din Tai Fung 101 hours","Taipei 101 opening time (sources say 10:00 or 11:00) and concession eligibility","Green World ZhongXiao late checkout / bag storage on 8 Dec","Astronomical Museum ride height rule"];
+["2 Dec (Wed)","Hsinchu Zoo","Closed Mondays","<span class=ok>Wed is fine</span>"],
+["4 Dec","Science Center","9F renovation; SkyCycle paused 12:00–13:00","<span class=md>Partial</span>"],
+["4 Dec (Fri)","Children's Amusement Park","Closed Mondays (non-holiday)","<span class=ok>Fri is fine</span>"],
+["7 Dec (Mon)","Maokong Gondola","Not on the published Dec stop list (14 and 28 Dec)","<span class=md>Recheck day before</span>"],
+["7 Dec (Mon)","Yongkang Street","Some shops rest on Mondays","<span class=md>Partial</span>"],
+["Any day","Maokong Gondola","Stops for strong wind, lightning, quake ≥4 or typhoon","Backup: Yongkang + Daan Park longer"],
+["4–6 Dec","Banqiao German Christmas Market","These 3 days only","<span class=ok>Planned Sun 6 Dec</span>"]];
+const MAN=["SUHU Café open on Tue 1 Dec (FB) & 2-h booking + deposit","梁陳吉日 hours for 15:45 early dinner on Sun","Flying Cow mini-horse ride details","青青好農食 Monday hours","屋場食事 reservation for Tue 1 Dec","Hsinchu Zoo hours & ticket","Hakka restaurants (吉祥樓, 笠園): weekly rest day","Maokong Gondola running on Mon 7 Dec","Rice & Shine, Lao Shandong, COOKIE886 hours","Green World ZhongXiao late checkout / bag storage on 8 Dec","SOL HOTEL bag storage until 15:00 on 2 Dec"];
 const TIX=[
-["Flying Cow Ranch","08:00–19:00","Adult NT$280 · age 3–K NT$160","Under 3 free"],
+["Flying Cow Ranch","Booth 07:00–19:00","Adult NT$280 · 65+ / age 3–K NT$160 · student NT$220","Under 3 free"],
+["Flying Cow activities","Calf feeding 09:30/15:00 · Duck parade 10:00/13:45 (+16:00 wknd) · Milking 07:00/11:00/14:15/17:00","Free (bottles & feed extra)","Milking hands-on ≥130 cm"],
+["Flying Cow DIY","Ice cream 12:30/14:30/16:30 · Painted cow 12:30–16:30 · Egg cake 13:30/15:30","NT$180/2 · NT$150 · NT$380/3","Sign up 10 min before"],
 ["Zhuo Ye Cottage","09:00–17:30","NT$200 (NT$100 credit)","<115 cm free"],
-["金漢柿餅教育農園","Daily 09:00–17:00","Free","Flat yard"],
-["Green World Farm","08:30–17:30","Adult NT$480 · child NT$350","≤90 cm / under 3 free"],
+["Green World Farm","08:30–17:30 (tickets till 16:00)","Adult NT$480 · 65+ NT$400 · child NT$350 · tram card NT$200/5 rides","≤90 cm / under 3 free"],
+["Green World shows (weekday)","Alpacas 10:30/13:00/14:30 · Eco talk 11:00/13:30/15:00 · Bird feeding 10:30 · Hall feeding 14:00","Free","Pelican show & petting feed: weekends only"],
+["Neiwan public car park","24 h","NT$30/h, weekday cap NT$90","~90 spaces"],
 ["六合 strawberries","08:00–18:30","~NT$700 per catty","Raised beds 90–120 cm"],
-["Taipei Zoo","09:00–17:00 (last entry 16:00; exhibits till 16:30)","Adult NT$100","Under 6 free"],
-["Zoo tram","Terminal last 16:30 · Bird World → terminal last 17:00 · Zoo South last 16:00","NT$5","Under 6 free; fold stroller"],
-["Maokong Gondola","Weekdays 09:00–21:00, weekends 09:00–22:00","NT$180 single · NT$300 day · Crystal +NT$50","0–5 free with adult (max 2)"],
+["SUHU Café","Picking 08:30–17:30 · Café 09:30–17:30","Min spend NT$300 (7+) / NT$150 (3–6); deposit when booking","Elevated beds; kids' toilet"],
+["Taipei Zoo","09:00–17:00 (last entry 16:00)","Adult NT$100","Under 6 free"],
+["Maokong Gondola","Weekdays 09:00–21:00","NT$180 single · NT$300 day cap","0–5 free with adult (max 2)"],
 ["Science Center","Tue–Fri 09:00–17:00","Adult NT$120","≤115 cm free"],
 ["Astronomical Museum","09:00–17:00 (Mon closed)","NT$40 · ride NT$70","Under 6 free"],
-["Xinyi lights (Shin Kong A11)","Show 16:30–22:00, every 15 min, until 3 Jan","Free","—"],
-["TPAC Christmas Village","4–6 Dec 13:00–19:00","Free","—"],
-["Banqiao German market","4–5 Dec 11:00–22:00 · 6 Dec 11:00–21:00","Free","—"],
-["Garden City","Sun–Thu 11:00–21:30","—","5F play area"],
-["Taipei 101 Observatory","Opens 10:00/11:00 (check) – 21:00","Adult NT$600 · concession NT$540 · 101F +NT$380","Under 115 cm free"],
-["NET Zhongxiao Flagship","11:00–22:00","—","Kids & baby floors"],
-["Daan Forest Park","24 h","Free","Playground"],
-["Moon Moon Food","11:00–14:00 / 17:00–20:00","—","—"],
+["Children's Amusement Park","Tue–Fri 09:00–17:00 · weekends 09:00–18:00","Entry NT$30 (≤6 & 65+ free) · rides NT$20–30 · day pass NT$200","<85 cm or under 2 free with adult; Ferris wheel <120 cm with adult"],
+["Uni-President / Dream Plaza lights","Lights 17:30 · tree show 18:00–21:00 (:00 & :30) · clock show 18:00–22:00","Free","—"],
+["Shin Kong A11 tree","Show every 15 min from 16:30","Free","—"],
+["NET Zhongxiao / NET Da'an","11:00–22:00 / 11:30–21:30","—","Kids & baby floors"],
+["Garden City","Fri–Sat 11:00–22:00","—","5F play area"],
+["SAMO ONDOH Zhongshan","Mon–Fri 13:00–22:00 · Sat–Sun 12:00–22:00","—","—"],
+["Banqiao German market","6 Dec 11:00–21:00","Free","—"],
 ["Master Spicy (Yanji)","11:30–14:30 / 17:30–21:00","—","Spicy: adults"],
-["ICHIRAN Taipei","Mon–Thu 10:00–05:00 · Fri–Sun 24 h","—","Kids' ramen"],
+["ICHIRAN Taipei","Mon–Thu 10:00–05:00","—","Kids' ramen"],
 ["Chia Te","08:30–20:30","—","—"]];
 const FX=[
-["v1.5 · 30 Nov","Persimmon farm added as first stop at 09:00 opening; rest of day shifted ~1.5 h, all before closing times","Moved from 2 Dec to remove car-return risk"],
-["v1.5 · 2 Dec","Easy morning; car returned by 11:00 with no stops on the way","Your request"],
-["v1.5 · 8 Dec","Gloria Outlets removed. Taipei 101 Observatory → hotel → Daan Forest Park → NET Zhongxiao → SOGO dinner → Tripool 20:00 from hotel","Tripool booked from hotel"],
-["v1.5 · 6 Dec","NET Da'an moved to 8 Dec (next to NET Zhongxiao); rest added","Routing"],
-["v1.4","Date badges instead of D1, D2","Your request"],
-["v1.4 · 3 Dec / 7 Dec","Zoo alone (tram up, walk down); Maokong at sunset on 7 Dec","Toddler + 70+ senior"],
-["v1.4","Night markets, Talu Book, Postal Museum removed; Xinyi lights, Dihua, Zhongshan added","Your request"]];
-const CK=["Confirm Tripool 8 Dec 20:00 pickup at Green World ZhongXiao","Child seat: Tripool ×3 + rental car","International Driving Permit","SOL HOTEL: bag storage until 15:00 on 2 Dec","Call 金漢柿餅 on 29 Nov (03-589-2680) to confirm racks are out","Call 六合 strawberry farm on 30 Nov (037-993521)","Check gondola status on 6 Dec evening","Book Taipei 101 Observatory online for 8 Dec morning","Ask Green World for late checkout / bag storage on 8 Dec","EasyCard for each adult (zoo tram, gondola, MRT)","Taiwan Arrival Card online"];
+["v1.6","Colours follow phone/PC light or dark mode (maps dim in dark mode)","Your request"],
+["v1.6 · 29 Nov","Leave 08:10, arrive Flying Cow 09:15; full morning activity list; Tongxiao Shrine removed; early dinner","Your request"],
+["v1.6 · 30 Nov","Persimmon farm removed; Green World show times; Neiwan parking; dinner → 內灣茶堂 (圓樓 closes 18:00)","Your request + hours check"],
+["v1.6 · 1 Dec","Lunch at SUHU Café; Dahu Winery removed; Nanzhuang parking + dinner at 屋場食事","Your request + Tue closures"],
+["v1.6 · 2 Dec","East Gate moat, City God Temple lunch, Hsinchu Zoo before 15:00 Tripool","Your request"],
+["v1.6 · 3 Dec","Uni-President Purple Wish + Dream Plaza + A11 tree; Ichiran replaces Din Tai Fung","Your request"],
+["v1.6 · 4 Dec","TPAC Christmas Village removed → Taipei Children's Amusement Park next to museums","Your request"],
+["v1.6 · 5 Dec","NET Zhongxiao + NET Da'an → hotel → lunch → Garden City → Master Spicy","Your request"],
+["v1.6 · 6 Dec","Old 5 Dec plan moved here + SAMO ONDOH before Banqiao market","Your request"],
+["v1.6 · 7 Dec","Yongkang St + Daan Park + Maokong sunset (all on Red/Brown line route)","Your request"],
+["v1.6 · 8 Dec","No 101/DTF: Lungshan → Ximending → Lao Shandong → Chia Te → rest → Tripool","Your request; keeps places displaced from 6 Dec"]];
+const CK=["Check SUHU Café FB, book 1 Dec lunch & pay deposit","Reserve 屋場食事 for 1 Dec 17:00","Call 六合 strawberry farm on 30 Nov (037-993521)","Confirm Tripool 8 Dec 20:00 pickup at Green World ZhongXiao","Child seat: Tripool ×3 + rental car","International Driving Permit","SOL HOTEL: bag storage until 15:00 on 2 Dec","Check gondola status on 6 Dec evening","Ask Green World for late checkout / bag storage on 8 Dec","EasyCard for each adult (zoo tram, gondola, MRT, kids' park rides)","Socks for kids' park ball pit","Taiwan Arrival Card online"];
 
 /* ===== helpers ===== */
-const $=s=>document.querySelector(s),LBL={f:"Food",a:"See",s:"Shop",tr:"Move",h:"Stay"},TAG={fix:"MOVED",new:"NEW",warn:"CHECK"};
+const $=s=>document.querySelector(s),LBL={f:"Food",a:"See",s:"Shop",tr:"Move",h:"Stay"},TAG={fix:"CHANGED",new:"NEW",warn:"CHECK"};
 const COL={car:"#2563eb",mrt:"#7c3aed",walk:"#16a34a",ride:"#ea580c"},DASH={car:null,mrt:"8 8",walk:"2 7",ride:"10 6"};
 const DAYC=["#ef4444","#f97316","#eab308","#84cc16","#10b981","#06b6d4","#3b82f6","#6366f1","#8b5cf6","#d946ef","#ec4899","#f43f5e","#64748b"];
 const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -449,7 +493,6 @@ function drawDay(d){const el=$("#m"+d);if(!el)return;
   const pts=st.map(s=>[P[s.k][0],P[s.k][1]]);
   const fit=()=>{m.invalidateSize();pts.length>1?m.fitBounds(pts,{padding:[25,25]}):m.setView(pts[0]||[25.04,121.55],13)};
   fit();setTimeout(fit,150);setTimeout(fit,500)}catch(e){mapErr(el)}})}
- 
 let OM=null,OL=null;
 function drawOverview(sel){const el=$("#omap");
  withLeaflet(lf=>{if(!lf)return mapErr(el);
@@ -471,8 +514,8 @@ $("#manl").innerHTML=MAN.map(m=>`<li>${m}</li>`).join("");
 $("#tixt").innerHTML=TIX.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("");
 $("#fixt").innerHTML=FX.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("");
 $("#nw").textContent=MAN.length;
-let ST={};try{ST=JSON.parse(localStorage.getItem("twck15")||"{}")}catch(e){}
+let ST={};try{ST=JSON.parse(localStorage.getItem("twck16")||"{}")}catch(e){}
 $("#chkl").innerHTML=CK.map((c,i)=>`<label><input type="checkbox" data-i="${i}" ${ST[i]?"checked":""}>${c}</label>`).join("");
-$("#chkl").addEventListener("change",e=>{ST[e.target.dataset.i]=e.target.checked;try{localStorage.setItem("twck15",JSON.stringify(ST))}catch(err){}});
+$("#chkl").addEventListener("change",e=>{ST[e.target.dataset.i]=e.target.checked;try{localStorage.setItem("twck16",JSON.stringify(ST))}catch(err){}});
 const dd=Math.ceil((new Date("2026-11-27T00:00:00+08:00")-new Date())/864e5);$("#cd").textContent=dd>0?dd:(dd>-13?"On trip":"Done");
 </script></body></html>
