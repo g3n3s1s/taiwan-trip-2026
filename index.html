@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-
-Taiwan Family Trip 2026 – Dashboard v1.5
-
-
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Taiwan Family Trip 2026 – Dashboard v1.5</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" onerror="this.onerror=null;this.href='https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css'">
+<style>
 :root{--acc:#0ea5e9;--ink:#1d2433;--mut:#6b7385}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,Segoe UI,Roboto,"PingFang TC","Microsoft JhengHei",sans-serif;background:#f4f6fa;color:var(--ink);font-size:15px;-webkit-text-size-adjust:100%}
 header{background:linear-gradient(135deg,#0ea5e9,#6366f1);color:#fff;padding:16px 14px 12px}
@@ -57,53 +57,53 @@ th{background:#f8fafc;font-size:.7rem;color:var(--mut);text-transform:uppercase}
 .pill.rec{background:#dcfce7;color:#15803d}.pill.alt{background:#fef9c3;color:#854d0e}.pill.no{background:#fee2e2;color:#991b1b}
 footer{font-size:.7rem;color:var(--mut);padding:10px 14px 30px;max-width:920px;margin:auto}
 @media(max-width:520px){.it{grid-template-columns:64px 1fr}.leg{padding-left:72px}.mode{display:none}.map{height:260px}}
+</style></head><body>
+<header><h1>🇹🇼 Taiwan Family Trip — Hsinchu · Miaoli · Taipei</h1>
+<p>27 Nov – 9 Dec 2026 · TR872 / TR875 · Rev 1.5 (persimmon → 30 Nov · new 8 Dec plan)</p>
+<div class="stats"><div class="stat"><b id="cd">–</b><span>days to go</span></div><div class="stat"><b>5</b><span>self-drive days</span></div><div class="stat"><b>6</b><span>Taipei MRT days</span></div><div class="stat"><b id="nw">–</b><span>items to check</span></div></div></header>
+<nav><button class="on" data-t="plan">📅 Itinerary</button><button data-t="ovm">🗺 Trip Map</button><button data-t="zoo">🐼 Zoo &amp; Maokong</button><button data-t="clo">🚧 Closures</button><button data-t="tix">🎟 Tickets</button><button data-t="fix">🛠 Changes</button><button data-t="chk">✅ Checklist</button></nav>
+<main>
+<section class="tab on" id="plan">
+<div class="filters" id="flt"><button class="on" data-f="all">All</button><button data-f="car">🚗 Self-drive</button><button data-f="pt">🚇 Taipei</button><button data-f="we">Weekend</button><button data-f="chg">Changed</button></div>
+<div class="legend">Tap a day to open its map and plan. Pink date = weekend. 🧭 opens Google Maps directions for that leg.</div>
+<div id="days"></div></section>
 
-🇹🇼 Taiwan Family Trip — Hsinchu · Miaoli · Taipei
-27 Nov – 9 Dec 2026 · TR872 / TR875 · Rev 1.5 (persimmon → 30 Nov · new 8 Dec plan)
-–days to go5self-drive days6Taipei MRT days–items to check
-📅 Itinerary🗺 Trip Map🐼 Zoo & Maokong🚧 Closures🎟 Tickets🛠 Changes✅ Checklist
+<section class="tab" id="ovm"><div class="card"><div class="filters"><select id="dsel"><option value="all">All days</option></select><span class="lg" style="font-size:.72rem;color:#6b7385"><i class="c"></i>Drive<i class="m"></i>MRT<i class="g"></i>Gondola/Tram<i class="w"></i>Walk</span></div><div id="omap"></div></div></section>
 
+<section class="tab" id="zoo"><div class="card zoo">
+<h4>Which option works best?</h4>
+<div class="tw"><table><thead><tr><th>Option</th><th>Good</th><th>Problems</th><th>Verdict</th></tr></thead><tbody>
+<tr><td><b>1) Split zoo over 2 days</b></td><td>Short zoo sessions</td><td>Two return MRT trips and two tickets. Gondola goes up in the morning, so no sunset. From Zoo South you can only enter by zoo tram; last tram there 16:00.</td><td><span class="pill alt">Works, not best</span></td></tr>
+<tr><td><b>2) Maokong and zoo on different days</b></td><td>Maokong at sunset (~17:04). Zoo in the morning when animals are active. Both days short.</td><td>Zoo day covers both halves, but tram-up / walk-down keeps it mostly downhill</td><td><span class="pill rec">Recommended</span></td></tr>
+<tr><td>Zoo + Maokong same day</td><td>One trip</td><td>Too long for a toddler and a 70+ senior</td><td><span class="pill no">Dropped</span></td></tr>
+</tbody></table></div>
+<p style="font-size:.84rem">Planned: <b>Zoo: Thu 3 Dec</b> · <b>Maokong sunset: Mon 7 Dec</b>. 7 Dec isn't on the gondola's published December stop list (14 and 28 Dec). Recheck the day before.</p>
+<h4>🐼 Zoo day (Thu 3 Dec): ride up, walk down</h4>
+<ol>
+<li><b>09:00</b> Enter main gate, walk ~3 min to the tram terminal (by Koala House). Ride to <b>Bird World Station</b>. Fold the stroller before boarding.</li>
+<li><b>09:20–11:15 Upper zone:</b> Penguin House → Temperate Animal Area → Bird World → Amphibian &amp; Reptile House.</li>
+<li><b>11:15–12:00</b> Walk downhill to the African Animal Area.</li>
+<li><b>12:00–13:00</b> Lunch and a sit-down break.</li>
+<li><b>13:00–14:30 Lower zone:</b> Pangolin Dome → Giant Panda House → Koala House → Formosan Animal Area.</li>
+<li><b>14:30</b> Exit, MRT back to rest.</li>
+</ol>
+<h4>If you choose Option 1 (split)</h4>
+<ul>
+<li><b>Day A (gondola → Zoo South):</b> tram to Bird World (last tram 16:00): Penguin, Temperate, Bird World, Reptile, African. Exit via main gate.</li>
+<li><b>Day B (main gate):</b> Koala, Giant Panda, Formosan, Children's Zoo, Pangolin Dome, Australian Area.</li>
+</ul>
+<h4>Toddler &amp; senior notes</h4>
+<ul><li>Zoo: under 6 free; tram NT$5 adults, under 6 free.</li><li>Gondola: ages 0–5 free with a paying adult (max 2 per adult). Adults NT$180 single; EasyCard caps at NT$300 per day.</li><li>Zoo closes 17:00, last entry 16:00, exhibits close 16:30.</li></ul>
+</div></section>
 
-All🚗 Self-drive🚇 TaipeiWeekendChanged
-Tap a day to open its map and plan. Pink date = weekend. 🧭 opens Google Maps directions for that leg.
-
-
-All daysDriveMRTGondola/TramWalk
-
-
-Which option works best?
-OptionGoodProblemsVerdict
-1) Split zoo over 2 daysShort zoo sessionsTwo return MRT trips and two tickets. Gondola goes up in the morning, so no sunset. From Zoo South you can only enter by zoo tram; last tram there 16:00.Works, not best
-2) Maokong and zoo on different daysMaokong at sunset (~17:04). Zoo in the morning when animals are active. Both days short.Zoo day covers both halves, but tram-up / walk-down keeps it mostly downhillRecommended
-Zoo + Maokong same dayOne tripToo long for a toddler and a 70+ seniorDropped
-
-Planned: Zoo: Thu 3 Dec · Maokong sunset: Mon 7 Dec. 7 Dec isn't on the gondola's published December stop list (14 and 28 Dec). Recheck the day before.
-🐼 Zoo day (Thu 3 Dec): ride up, walk down
-
-09:00 Enter main gate, walk ~3 min to the tram terminal (by Koala House). Ride to Bird World Station. Fold the stroller before boarding.
-09:20–11:15 Upper zone: Penguin House → Temperate Animal Area → Bird World → Amphibian & Reptile House.
-11:15–12:00 Walk downhill to the African Animal Area.
-12:00–13:00 Lunch and a sit-down break.
-13:00–14:30 Lower zone: Pangolin Dome → Giant Panda House → Koala House → Formosan Animal Area.
-14:30 Exit, MRT back to rest.
-
-If you choose Option 1 (split)
-
-Day A (gondola → Zoo South): tram to Bird World (last tram 16:00): Penguin, Temperate, Bird World, Reptile, African. Exit via main gate.
-Day B (main gate): Koala, Giant Panda, Formosan, Children's Zoo, Pangolin Dome, Australian Area.
-
-Toddler & senior notes
-Zoo: under 6 free; tram NT$5 adults, under 6 free.Gondola: ages 0–5 free with a paying adult (max 2 per adult). Adults NT$180 single; EasyCard caps at NT$300 per day.Zoo closes 17:00, last entry 16:00, exhibits close 16:30.
-
-
-DatePlaceClosure / maintenanceImpact
-Check these yourself (I couldn't confirm them):
-PlaceHoursTicketToddler / height
-Version / dayChangeWhy
-
-
-Map pins are approximate. Use 🧭 links for exact navigation. Drive lines follow roads when routing loads; other lines are straight. Map © OpenStreetMap contributors. Hours, prices and closures checked 23 Nov 2026; check again the day before.
-
+<section class="tab" id="clo"><div class="card tw"><table><thead><tr><th>Date</th><th>Place</th><th>Closure / maintenance</th><th>Impact</th></tr></thead><tbody id="clot"></tbody></table></div>
+<div class="card"><b>Check these yourself</b> (I couldn't confirm them):<ul id="manl" style="font-size:.82rem;padding-left:18px;margin:6px 0"></ul></div></section>
+<section class="tab" id="tix"><div class="card tw"><table><thead><tr><th>Place</th><th>Hours</th><th>Ticket</th><th>Toddler / height</th></tr></thead><tbody id="tixt"></tbody></table></div></section>
+<section class="tab" id="fix"><div class="card tw"><table><thead><tr><th>Version / day</th><th>Change</th><th>Why</th></tr></thead><tbody id="fixt"></tbody></table></div></section>
+<section class="tab" id="chk"><div class="card chk" id="chkl"></div></section>
+</main>
+<footer>Map pins are approximate. Use 🧭 links for exact navigation. Drive lines follow roads when routing loads; other lines are straight. Map © OpenStreetMap contributors. Hours, prices and closures checked 23 Nov 2026; check again the day before.</footer>
+<script>
 /* ===== Places: key:[lat,lng,label,google query] ===== */
 const P={
 tpe:[25.0777,121.2328,"Taoyuan Airport T1","Taiwan Taoyuan International Airport Terminal 1"],
@@ -340,16 +340,16 @@ const D=[
 {date:"2026-12-09",dow:"Wed",title:"TR875 → Singapore",m:"pt",it:[
 ["00:15","tr","TR875 TPE → SIN","Scheduled arrival 04:50","","","","","tpe"]]}];
 const CLO=[
-["29 Nov","Flying Cow Ranch","Stream repair works until 31 Dec: nature trail closed","Partial"],
-["30 Nov (Mon)","Maokong Gondola","Monday maintenance stop","Not planned that day"],
-["30 Nov","金漢柿餅","Drying racks depend on weather and harvest","Call 03-589-2680"],
-["4 Dec","Science Center","9F renovation; SkyCycle paused 12:00–13:00","Partial"],
-["7 Dec (Mon)","Maokong Gondola","Not on the published Dec stop list (14 and 28 Dec)","Recheck day before"],
-["7 Dec (Mon)","Taipei Zoo","1st Monday: Giant Panda House closed","Avoided: zoo on Thu"],
-["7 Dec (Mon)","Science Center, Astronomical Museum","Closed every Monday","Avoided"],
+["29 Nov","Flying Cow Ranch","Stream repair works until 31 Dec: nature trail closed","<span class=md>Partial</span>"],
+["30 Nov (Mon)","Maokong Gondola","Monday maintenance stop","<span class=ok>Not planned that day</span>"],
+["30 Nov","金漢柿餅","Drying racks depend on weather and harvest","<span class=md>Call 03-589-2680</span>"],
+["4 Dec","Science Center","9F renovation; SkyCycle paused 12:00–13:00","<span class=md>Partial</span>"],
+["7 Dec (Mon)","Maokong Gondola","Not on the published Dec stop list (14 and 28 Dec)","<span class=md>Recheck day before</span>"],
+["7 Dec (Mon)","Taipei Zoo","1st Monday: Giant Panda House closed","<span class=ok>Avoided: zoo on Thu</span>"],
+["7 Dec (Mon)","Science Center, Astronomical Museum","Closed every Monday","<span class=ok>Avoided</span>"],
 ["Any day","Maokong Gondola","Stops for strong wind, lightning, quake ≥4 or typhoon","Backup: Taipei 101 observatory"],
-["1 Dec","Dahu strawberries","Early season; farm may pause after rain","Call ahead"],
-["4–6 Dec","TPAC Christmas Village / Banqiao German market","These 3 days only","Planned 4 & 5 Dec"]];
+["1 Dec","Dahu strawberries","Early season; farm may pause after rain","<span class=md>Call ahead</span>"],
+["4–6 Dec","TPAC Christmas Village / Banqiao German market","These 3 days only","<span class=ok>Planned 4 &amp; 5 Dec</span>"]];
 const MAN=["Rental office ↔ SOL HOTEL walking distance","SOL HOTEL bag storage until 15:00 on 2 Dec","Hakka restaurants (吉祥樓, 笠園, 梁陳吉日, 內灣圓樓, 崛起山城): weekly rest day","青青好農食 Monday hours","Drive time 金漢柿餅 → Green World (estimate ~40 min)","Maokong Gondola running on Mon 7 Dec","Rice & Shine, Lao Shandong, COOKIE886, Din Tai Fung 101 hours","Taipei 101 opening time (sources say 10:00 or 11:00) and concession eligibility","Green World ZhongXiao late checkout / bag storage on 8 Dec","Astronomical Museum ride height rule"];
 const TIX=[
 ["Flying Cow Ranch","08:00–19:00","Adult NT$280 · age 3–K NT$160","Under 3 free"],
@@ -381,4 +381,97 @@ const FX=[
 ["v1.4","Date badges instead of D1, D2","Your request"],
 ["v1.4 · 3 Dec / 7 Dec","Zoo alone (tram up, walk down); Maokong at sunset on 7 Dec","Toddler + 70+ senior"],
 ["v1.4","Night markets, Talu Book, Postal Museum removed; Xinyi lights, Dihua, Zhongshan added","Your request"]];
-const CK=["Confirm Tripool 8 Dec 20:00 pickup at Green World ZhongXiao","Child seat: Tripool ×3 + rental car","International Driving Permit","SOL HOTEL: bag storage until 15:00 on 2 Dec","Call 金漢柿餅 on 29 Nov (03-589-2680) to confirm racks are out","Call 六合 strawberry farm on 30 Nov (037-993521)
+const CK=["Confirm Tripool 8 Dec 20:00 pickup at Green World ZhongXiao","Child seat: Tripool ×3 + rental car","International Driving Permit","SOL HOTEL: bag storage until 15:00 on 2 Dec","Call 金漢柿餅 on 29 Nov (03-589-2680) to confirm racks are out","Call 六合 strawberry farm on 30 Nov (037-993521)","Check gondola status on 6 Dec evening","Book Taipei 101 Observatory online for 8 Dec morning","Ask Green World for late checkout / bag storage on 8 Dec","EasyCard for each adult (zoo tram, gondola, MRT)","Taiwan Arrival Card online"];
+
+/* ===== helpers ===== */
+const $=s=>document.querySelector(s),LBL={f:"Food",a:"See",s:"Shop",tr:"Move",h:"Stay"},TAG={fix:"MOVED",new:"NEW",warn:"CHECK"};
+const COL={car:"#2563eb",mrt:"#7c3aed",walk:"#16a34a",ride:"#ea580c"},DASH={car:null,mrt:"8 8",walk:"2 7",ride:"10 6"};
+const DAYC=["#ef4444","#f97316","#eab308","#84cc16","#10b981","#06b6d4","#3b82f6","#6366f1","#8b5cf6","#d946ef","#ec4899","#f43f5e","#64748b"];
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+D.forEach((x,i)=>{x.d=i+1;const p=x.date.split("-");x.dd=+p[2];x.lab=x.dd+" "+MON[+p[1]-1]});
+const gq=k=>encodeURIComponent(P[k][3]);
+const gdir=(a,b,m)=>`https://www.google.com/maps/dir/?api=1&origin=${gq(a)}&destination=${gq(b)}&travelmode=${m==="car"?"driving":m==="walk"?"walking":"transit"}`;
+function route(x){const st=[],lg=[];let pend=null,last=null,n=0;
+ x.it.forEach(i=>{if(i[0]==="→"){pend=i[2]||"mrt";return}
+  const k=i[8];if(!k||!P[k])return;
+  if(last&&last!==k)lg.push({a:last,b:k,mode:pend||"mrt"});
+  pend=null;const ex=st.find(s=>s.k===k);if(!ex)st.push({k,num:++n,items:[i]});else ex.items.push(i);last=k});
+ return{st,lg}}
+function gDay(x){if(x.m!=="car")return"";const {st}=route(x);if(st.length<2)return"";
+ const pts=st.map(s=>s.k),w=pts.slice(1,-1).map(gq).join("|");
+ return`https://www.google.com/maps/dir/?api=1&origin=${gq(pts[0])}&destination=${gq(pts[pts.length-1])}${w?"&waypoints="+w:""}&travelmode=driving`}
+
+/* ===== render days ===== */
+function render(f){let h="";
+D.forEach(x=>{const we=["Sat","Sun"].includes(x.dow),chg=x.it.some(i=>i[4]);
+ if(f==="car"&&x.m!=="car")return;if(f==="pt"&&x.m!=="pt")return;if(f==="we"&&!we)return;if(f==="chg"&&!chg)return;
+ let td="";try{td=new Date().toLocaleDateString("en-CA",{timeZone:"Asia/Taipei"})===x.date?" today open":""}catch(e){}
+ const {st}=route(x),num=k=>(st.find(s=>s.k===k)||{}).num;let prev=null;
+ const rows=x.it.map((i,ix)=>{
+  if(i[0]==="→"){const md=i[2]||"mrt",nx=x.it.slice(ix+1).find(z=>z[0]!=="→"&&z[8]&&P[z[8]]);let a="";
+   if(prev&&nx&&nx[8]!==prev&&md!=="ride")a=`<a href="${gdir(prev,nx[8],md)}" target="_blank" rel="noopener">🧭 ${md==="car"?"Drive":md==="walk"?"Walk":"Transit"}</a>`;
+   return`<div class="leg">↓ ${i[1]} ${a}</div>`}
+  if(i[8]&&P[i[8]])prev=i[8];
+  const nb=i[8]&&P[i[8]]?`<span class="pin" style="background:${["sol","gwz"].includes(i[8])?"#2563eb":"#ef4444"}">${num(i[8])}</span>`:"";
+  return`<div class="it"><div class="t">${i[0]}</div><div>${nb}<span class="k ${i[1]}">${LBL[i[1]]}</span><span class="n">${i[2]}</span>${i[4]?`<span class="tag ${i[4]}">${TAG[i[4]]}</span>`:""}<div class="d">${i[3]||""}</div>${(i[5]||i[6]||i[7])?`<div class="info">${i[5]?`<span class="h">🕘 ${i[5]}</span>`:""}${i[6]?`<span>🎟 ${i[6]}</span>`:""}${i[7]?`<span class="kid">🧒 ${i[7]}</span>`:""}</div>`:""}</div></div>`}).join("");
+ const g=gDay(x);
+ h+=`<div class="card${we?" we":""}${td}" data-d="${x.d}"><div class="dayhead"><span class="dnum">${x.lab}<small>${x.dow}</small></span><h3>${x.title}</h3><span class="mode ${x.m}">${x.m==="car"?"🚗 Self-drive":"🚇 MRT"}</span></div><div class="body">
+<div class="map" id="m${x.d}"></div><div class="mapbar"><span class="lg"><i class="c"></i>Drive<i class="m"></i>MRT<i class="g"></i>Gondola/Tram<i class="w"></i>Walk</span>${g?`<a href="${g}" target="_blank" rel="noopener">🧭 Full day route</a>`:""}</div>${rows}</div></div>`});
+$("#days").innerHTML=h;
+document.querySelectorAll(".dayhead").forEach(e=>e.addEventListener("click",()=>{const c=e.parentNode;c.classList.toggle("open");if(c.classList.contains("open"))drawDay(+c.dataset.d)}));
+document.querySelectorAll(".card.open[data-d]").forEach(c=>drawDay(+c.dataset.d))}
+
+/* ===== Leaflet loader (with backup CDN) ===== */
+let LF=null,lfWait=[];
+function withLeaflet(cb){if(LF)return cb(LF);lfWait.push(cb);if(lfWait.length>1)return;
+ const srcs=["https://unpkg.com/leaflet@1.9.4/dist/leaflet.js","https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"];
+ (function tryLoad(i){if(i>=srcs.length){const q=lfWait;lfWait=[];q.forEach(f=>f(null));return}
+  const s=document.createElement("script");s.src=srcs[i];
+  s.onload=()=>{LF=window.L;const q=lfWait;lfWait=[];q.forEach(f=>f(LF))};
+  s.onerror=()=>tryLoad(i+1);document.head.appendChild(s)})(0)}
+const MAPS={},OS={};
+function tiles(lf,m){lf.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(m)}
+function icon(lf,n,base,c){return lf.divIcon({className:"",html:`<div class="num${base?" base":""}"${c?` style="background:${c}"`:""}>${n}</div>`,iconSize:[26,26],iconAnchor:[13,13]})}
+function osrm(a,b){const key=a+">"+b;if(OS[key])return OS[key];
+ const u=`https://router.project-osrm.org/route/v1/driving/${P[a][1]},${P[a][0]};${P[b][1]},${P[b][0]}?overview=full&geometries=geojson`;
+ OS[key]=fetch(u).then(r=>r.json()).then(j=>j.routes[0].geometry.coordinates.map(c=>[c[1],c[0]])).catch(()=>null);return OS[key]}
+function mapErr(el){el.innerHTML='<div class="maperr">Map couldn\'t load (no connection or blocked). The plan and 🧭 links still work.</div>'}
+function drawDay(d){const el=$("#m"+d);if(!el)return;
+ if(MAPS[d]){setTimeout(()=>MAPS[d].invalidateSize(),60);return}
+ withLeaflet(lf=>{if(!lf)return mapErr(el);if(MAPS[d])return;
+  try{const x=D.find(z=>z.d===d),{st,lg}=route(x);
+  const m=lf.map(el,{scrollWheelZoom:false});tiles(lf,m);MAPS[d]=m;
+  lg.forEach(l=>{const a=[P[l.a][0],P[l.a][1]],b=[P[l.b][0],P[l.b][1]];
+   const ln=lf.polyline([a,b],{color:COL[l.mode],weight:4,opacity:.85,dashArray:l.mode==="car"?"4 6":DASH[l.mode]}).addTo(m);
+   if(l.mode==="car")osrm(l.a,l.b).then(p=>{if(p){m.removeLayer(ln);lf.polyline(p,{color:COL.car,weight:5,opacity:.85}).addTo(m)}})});
+  st.forEach(s=>{const p=P[s.k];lf.marker([p[0],p[1]],{icon:icon(lf,s.num,["sol","gwz"].includes(s.k))}).addTo(m)
+   .bindPopup(`<b>${s.num}. ${p[2]}</b><br>${s.items.map(i=>`${i[0]} · ${i[2]}`).join("<br>")}<br><a href="https://www.google.com/maps/search/?api=1&query=${gq(s.k)}" target="_blank" rel="noopener">Open in Google Maps</a>`)});
+  const pts=st.map(s=>[P[s.k][0],P[s.k][1]]);
+  const fit=()=>{m.invalidateSize();pts.length>1?m.fitBounds(pts,{padding:[25,25]}):m.setView(pts[0]||[25.04,121.55],13)};
+  fit();setTimeout(fit,150);setTimeout(fit,500)}catch(e){mapErr(el)}})}
+let OM=null,OL=null;
+function drawOverview(sel){const el=$("#omap");
+ withLeaflet(lf=>{if(!lf)return mapErr(el);
+  try{if(!OM){OM=lf.map(el,{scrollWheelZoom:false});tiles(lf,OM)}
+  if(OL)OM.removeLayer(OL);OL=lf.layerGroup().addTo(OM);const pts=[];
+  D.filter(x=>sel==="all"||x.d==+sel).forEach(x=>{const {st,lg}=route(x),c=DAYC[(x.d-1)%DAYC.length];
+   lg.forEach(l=>{lf.polyline([[P[l.a][0],P[l.a][1]],[P[l.b][0],P[l.b][1]]],{color:sel==="all"?c:COL[l.mode],weight:3,opacity:.75,dashArray:DASH[l.mode]}).addTo(OL)});
+   st.forEach(s=>{const p=P[s.k];pts.push([p[0],p[1]]);lf.marker([p[0],p[1]],{icon:icon(lf,sel==="all"?x.dd:s.num,false,sel==="all"?c:null)}).addTo(OL).bindPopup(`<b>${x.lab} · ${p[2]}</b><br>${s.items.map(i=>`${i[0]} · ${i[2]}`).join("<br>")}`)})});
+  const fit=()=>{OM.invalidateSize();if(pts.length)OM.fitBounds(pts,{padding:[25,25]})};fit();setTimeout(fit,200)}catch(e){mapErr(el)}})}
+
+/* ===== init ===== */
+render("all");
+$("#flt").addEventListener("click",e=>{if(!e.target.dataset.f)return;document.querySelectorAll("#flt button").forEach(b=>b.classList.remove("on"));e.target.classList.add("on");for(const k in MAPS){MAPS[k].remove();delete MAPS[k]}render(e.target.dataset.f)});
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("nav button,.tab").forEach(z=>z.classList.remove("on"));b.classList.add("on");$("#"+b.dataset.t).classList.add("on");scrollTo(0,0);if(b.dataset.t==="ovm")drawOverview($("#dsel").value)}));
+$("#dsel").innerHTML+=D.map(x=>`<option value="${x.d}">${x.lab} (${x.dow}) · ${x.title}</option>`).join("");
+$("#dsel").addEventListener("change",e=>drawOverview(e.target.value));
+$("#clot").innerHTML=CLO.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("");
+$("#manl").innerHTML=MAN.map(m=>`<li>${m}</li>`).join("");
+$("#tixt").innerHTML=TIX.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("");
+$("#fixt").innerHTML=FX.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("");
+$("#nw").textContent=MAN.length;
+let ST={};try{ST=JSON.parse(localStorage.getItem("twck15")||"{}")}catch(e){}
+$("#chkl").innerHTML=CK.map((c,i)=>`<label><input type="checkbox" data-i="${i}" ${ST[i]?"checked":""}>${c}</label>`).join("");
+$("#chkl").addEventListener("change",e=>{ST[e.target.dataset.i]=e.target.checked;try{localStorage.setItem("twck15",JSON.stringify(ST))}catch(err){}});
+const dd=Math.ceil((new Date("2026-11-27T00:00:00+08:00")-new Date())/864e5);$("#cd").textContent=dd>0?dd:(dd>-13?"On trip":"Done");
+</script></body></html>
