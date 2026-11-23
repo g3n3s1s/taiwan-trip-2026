@@ -449,6 +449,7 @@ function drawDay(d){const el=$("#m"+d);if(!el)return;
   const pts=st.map(s=>[P[s.k][0],P[s.k][1]]);
   const fit=()=>{m.invalidateSize();pts.length>1?m.fitBounds(pts,{padding:[25,25]}):m.setView(pts[0]||[25.04,121.55],13)};
   fit();setTimeout(fit,150);setTimeout(fit,500)}catch(e){mapErr(el)}})}
+ 
 let OM=null,OL=null;
 function drawOverview(sel){const el=$("#omap");
  withLeaflet(lf=>{if(!lf)return mapErr(el);
