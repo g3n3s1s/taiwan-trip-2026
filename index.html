@@ -1,8 +1,9 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Taiwan Family Trip 2026 – Dashboard v1.2</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<title>Taiwan Family Trip 2026 – Dashboard v1.3</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" onerror="this.onerror=null;this.href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css'">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>if(!window.L){document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"><\/script>')}</script>
 <style>
 :root{--acc:#0ea5e9;--ink:#1d2433;--mut:#6b7385}
 *{box-sizing:border-box}body{margin:0;font-family:-apple-system,Segoe UI,Roboto,"PingFang TC","Microsoft JhengHei",sans-serif;background:#f4f6fa;color:var(--ink);font-size:15px;-webkit-text-size-adjust:100%}
@@ -56,7 +57,7 @@ footer{font-size:.7rem;color:var(--mut);padding:10px 14px 30px;max-width:920px;m
 @media(max-width:520px){.it{grid-template-columns:64px 1fr}.leg{padding-left:72px}.mode{display:none}.map{height:260px}}
 </style></head><body>
 <header><h1>🇹🇼 Taiwan Family Trip — Hsinchu · Miaoli · Taipei</h1>
-<p>27 Nov – 9 Dec 2026 · TR872 / TR875 · Rev 1.2 (maps &amp; routes)</p>
+<p>27 Nov – 9 Dec 2026 · TR872 / TR875 · Rev 1.3 (GitHub Pages &amp; Safari map fix)</p>
 <div class="stats"><div class="stat"><b id="cd">–</b><span>days to go</span></div><div class="stat"><b>5</b><span>self-drive days</span></div><div class="stat"><b>6</b><span>Taipei MRT days</span></div><div class="stat"><b id="nw">–</b><span>items to check</span></div></div></header>
 <nav><button class="on" data-t="plan">📅 Itinerary</button><button data-t="ovm">🗺 Trip Map</button><button data-t="clo">🚧 Closures</button><button data-t="tix">🎟 Tickets</button><button data-t="fix">🛠 Changes</button><button data-t="chk">✅ Checklist</button></nav>
 <main>
@@ -72,7 +73,7 @@ footer{font-size:.7rem;color:var(--mut);padding:10px 14px 30px;max-width:920px;m
 <section class="tab" id="fix"><div class="card tw"><table><thead><tr><th>Day</th><th>Change</th><th>Why</th></tr></thead><tbody id="fixt"></tbody></table></div></section>
 <section class="tab" id="chk"><div class="card chk" id="chkl"></div></section>
 </main>
-<footer>Map pins are approximate. The 🧭 buttons search Google Maps by place name for exact navigation. Drive lines follow roads (OpenStreetMap/OSRM); MRT and walk lines are drawn straight from stop to stop. Map © OpenStreetMap contributors. Hours and prices were checked 23 Nov 2026 from official sites and travel guides; check again the day before.</footer>
+<footer>Map pins are approximate. The 🧭 buttons search Google Maps by place name for exact navigation. Drive lines follow roads (OpenStreetMap/OSRM); MRT and walk lines are drawn straight from stop to stop. No map API key is required. Map © OpenStreetMap contributors. Hours and prices were checked 23 Nov 2026 from official sites and travel guides; check again the day before.</footer>
 <script>
 /* ---------- Places: key:[lat,lng,label,google query] (approximate) ---------- */
 const P={
@@ -345,7 +346,7 @@ const FX=[
 ["D11","Mon: only open-on-Monday places, along the Blue line","Monday closures"]];
 const CK=["Ask Tripool to move the 27 Nov pickup from 20:30 to ~18:00","Confirm Tripool 8 Dec pickup point = Gloria Outlets","Child seat: Tripool ×3 + rental car","International Driving Permit","SOL HOTEL: bag storage until 15:00 on 2 Dec","Call 六合 strawberry farm on 30 Nov (037-993521)","Book Taipei 101 time slot","Book 黑毛屋 dinner 8 Dec","EasyCard for each adult","Passports for outlet tax refund","Taiwan Arrival Card online","Save this page offline in Safari (Add to Home Screen)"];
 /* ---------- helpers ---------- */
-const $=s=>document.querySelector(s),L={f:"Food",a:"See",s:"Shop",tr:"Move",h:"Stay"},T={fix:"MOVED",new:"NEW",warn:"CHECK"};
+const $=s=>document.querySelector(s),KIND={f:"Food",a:"See",s:"Shop",tr:"Move",h:"Stay"},T={fix:"MOVED",new:"NEW",warn:"CHECK"};
 const COL={car:"#2563eb",mrt:"#7c3aed",walk:"#16a34a"},DASH={car:null,mrt:"8 8",walk:"2 7"};
 const DAYC=["#ef4444","#f97316","#eab308","#84cc16","#10b981","#06b6d4","#3b82f6","#6366f1","#8b5cf6","#d946ef","#ec4899","#f43f5e","#64748b"];
 const gq=k=>encodeURIComponent(P[k][3]);
@@ -375,7 +376,7 @@ const rows=x.it.map((i,ix)=>{
   return`<div class="leg">↓ ${i[1]} ${a}</div>`}
  if(i[8]&&P[i[8]])prev=i[8];
  const nb=i[8]&&P[i[8]]?`<span class="pin" style="background:${["sol","gwz"].includes(i[8])?"#2563eb":"#ef4444"}">${num(i[8])}</span>`:"";
- return`<div class="it"><div class="t">${i[0]}</div><div>${nb}<span class="k ${i[1]}">${L[i[1]]}</span><span class="n">${i[2]}</span>${i[4]?`<span class="tag ${i[4]}">${T[i[4]]}</span>`:""}<div class="d">${i[3]||""}</div>${(i[5]||i[6]||i[7])?`<div class="info">${i[5]?`<span class="h">🕘 ${i[5]}</span>`:""}${i[6]?`<span>🎟 ${i[6]}</span>`:""}${i[7]?`<span class="kid">🧒 ${i[7]}</span>`:""}</div>`:""}</div></div>`}).join("");
+ return`<div class="it"><div class="t">${i[0]}</div><div>${nb}<span class="k ${i[1]}">${KIND[i[1]]}</span><span class="n">${i[2]}</span>${i[4]?`<span class="tag ${i[4]}">${T[i[4]]}</span>`:""}<div class="d">${i[3]||""}</div>${(i[5]||i[6]||i[7])?`<div class="info">${i[5]?`<span class="h">🕘 ${i[5]}</span>`:""}${i[6]?`<span>🎟 ${i[6]}</span>`:""}${i[7]?`<span class="kid">🧒 ${i[7]}</span>`:""}</div>`:""}</div></div>`}).join("");
 const g=gDay(x);
 h+=`<div class="card${we?" we":""}${td}" data-d="${x.d}"><div class="dayhead"><span class="dnum">D${x.d}</span><h3>${x.title}<br><small>${x.dow} · ${x.date.slice(5)}</small></h3><span class="mode ${x.m}">${x.m==="car"?"🚗 Self-drive":"🚇 MRT"}</span></div><div class="body">
 <div class="map" id="m${x.d}"></div><div class="mapbar"><span class="lg"><i class="c"></i>Drive<i class="m"></i>MRT/Train<i class="w"></i>Walk</span>${g?`<a href="${g}" target="_blank" rel="noopener">🧭 Full day route in Google Maps</a>`:""}</div>${rows}</div></div>`});
@@ -386,29 +387,29 @@ document.querySelectorAll(".card.open").forEach(c=>drawDay(+c.dataset.d))}
 const MAPS={},OS={};
 function osrm(a,b){const key=a+">"+b;if(OS[key])return OS[key];
  const u=`https://router.project-osrm.org/route/v1/driving/${P[a][1]},${P[a][0]};${P[b][1]},${P[b][0]}?overview=full&geometries=geojson`;
- OS[key]=fetch(u).then(r=>r.json()).then(j=>j.routes[0].geometry.coordinates.map(c=>[c[1],c[0]])).catch(()=>null);return OS[key]}
-function icon(n,base,c){return L.divIcon({className:"",html:`<div class="num${base?" base":""}" style="${c?`background:${c}`:""}">${n}</div>`,iconSize:[24,24],iconAnchor:[12,12]})}
-function tiles(m){L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap"}).addTo(m)}
+ OS[key]=fetch(u).then(r=>{if(!r.ok)throw Error("OSRM "+r.status);return r.json()}).then(j=>j&&j.routes&&j.routes[0]?j.routes[0].geometry.coordinates.map(c=>[c[1],c[0]]):null).catch(()=>null);return OS[key]}
+function icon(n,base,c){return window.L.divIcon({className:"",html:`<div class="num${base?" base":""}" style="${c?`background:${c}`:""}">${n}</div>`,iconSize:[24,24],iconAnchor:[12,12]})}
+function tiles(m){window.L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"© OpenStreetMap contributors",crossOrigin:true}).addTo(m)}
 function drawLegs(m,lg,color){lg.forEach(l=>{const a=[P[l.a][0],P[l.a][1]],b=[P[l.b][0],P[l.b][1]];
  const c=color||COL[l.mode];
- const tmp=L.polyline([a,b],{color:c,weight:4,opacity:.8,dashArray:l.mode==="car"?"4 6":DASH[l.mode]}).addTo(m);
- if(l.mode==="car"){osrm(l.a,l.b).then(p=>{if(p){m.removeLayer(tmp);L.polyline(p,{color:c,weight:5,opacity:.85}).addTo(m)}})}})}
-function drawDay(d){if(typeof L==="undefined"){const e=$("#m"+d);if(e)e.innerHTML="<p style='padding:12px;font-size:.8rem'>Map needs an internet connection. Use the 🧭 links.</p>";return}
+ const tmp=window.L.polyline([a,b],{color:c,weight:4,opacity:.8,dashArray:l.mode==="car"?"4 6":DASH[l.mode]}).addTo(m);
+ if(l.mode==="car"){osrm(l.a,l.b).then(p=>{if(p){m.removeLayer(tmp);window.L.polyline(p,{color:c,weight:5,opacity:.85}).addTo(m)}})}})}
+function drawDay(d){if(typeof window.L==="undefined"){const e=$("#m"+d);if(e)e.innerHTML="<p style='padding:12px;font-size:.8rem'>Map needs an internet connection. Use the 🧭 links.</p>";return}
  if(MAPS[d]){setTimeout(()=>MAPS[d].invalidateSize(),50);return}
  const x=D.find(z=>z.d===d),{st,lg}=route(x);const el=$("#m"+d);if(!el)return;
- const m=L.map(el,{scrollWheelZoom:false,tap:true});tiles(m);MAPS[d]=m;
+ const m=window.L.map(el,{scrollWheelZoom:false,zoomControl:true});tiles(m);MAPS[d]=m;
  drawLegs(m,lg);
- st.forEach(s=>{const p=P[s.k];L.marker([p[0],p[1]],{icon:icon(s.num,["sol","gwz"].includes(s.k))}).addTo(m)
+ st.forEach(s=>{const p=P[s.k];window.L.marker([p[0],p[1]],{icon:icon(s.num,["sol","gwz"].includes(s.k))}).addTo(m)
   .bindPopup(`<b>${s.num}. ${p[2]}</b><br>${s.items.map(i=>`${i[0]} · ${i[2]}`).join("<br>")}<br><a href="https://www.google.com/maps/search/?api=1&query=${gq(s.k)}" target="_blank" rel="noopener">Open in Google Maps</a>`)});
- const b=L.latLngBounds(st.map(s=>[P[s.k][0],P[s.k][1]]));
+ const b=window.L.latLngBounds(st.map(s=>[P[s.k][0],P[s.k][1]]));
  setTimeout(()=>{m.invalidateSize();st.length>1?m.fitBounds(b,{padding:[25,25]}):m.setView(b.getCenter(),12)},60)}
 let OM=null,OL=null;
-function drawOverview(sel){if(typeof L==="undefined"){$("#omap").innerHTML="<p style='padding:12px'>Map needs an internet connection.</p>";return}
- if(!OM){OM=L.map("omap",{scrollWheelZoom:false});tiles(OM)}
- if(OL)OM.removeLayer(OL);OL=L.layerGroup().addTo(OM);const pts=[];
+function drawOverview(sel){if(typeof window.L==="undefined"){$("#omap").innerHTML="<p style='padding:12px'>Map needs an internet connection.</p>";return}
+ if(!OM){OM=window.L.map("omap",{scrollWheelZoom:false,zoomControl:true});tiles(OM)}
+ if(OL)OM.removeLayer(OL);OL=window.L.layerGroup().addTo(OM);const pts=[];
  D.filter(x=>sel==="all"||x.d==+sel).forEach(x=>{const {st,lg}=route(x),c=DAYC[(x.d-1)%DAYC.length];
-  lg.forEach(l=>{L.polyline([[P[l.a][0],P[l.a][1]],[P[l.b][0],P[l.b][1]]],{color:sel==="all"?c:COL[l.mode],weight:3,opacity:.75,dashArray:DASH[l.mode]}).addTo(OL)});
-  st.forEach(s=>{const p=P[s.k];pts.push([p[0],p[1]]);L.marker([p[0],p[1]],{icon:icon(sel==="all"?"D"+x.d:s.num,false,sel==="all"?c:null)}).addTo(OL).bindPopup(`<b>D${x.d} · ${p[2]}</b><br>${s.items.map(i=>`${i[0]} · ${i[2]}`).join("<br>")}`)})});
+  lg.forEach(l=>{window.L.polyline([[P[l.a][0],P[l.a][1]],[P[l.b][0],P[l.b][1]]],{color:sel==="all"?c:COL[l.mode],weight:3,opacity:.75,dashArray:DASH[l.mode]}).addTo(OL)});
+  st.forEach(s=>{const p=P[s.k];pts.push([p[0],p[1]]);window.L.marker([p[0],p[1]],{icon:icon(sel==="all"?"D"+x.d:s.num,false,sel==="all"?c:null)}).addTo(OL).bindPopup(`<b>D${x.d} · ${p[2]}</b><br>${s.items.map(i=>`${i[0]} · ${i[2]}`).join("<br>")}`)})});
  setTimeout(()=>{OM.invalidateSize();if(pts.length)OM.fitBounds(pts,{padding:[25,25]})},60)}
 /* ---------- init ---------- */
 render("all");
@@ -421,8 +422,8 @@ $("#manl").innerHTML=MAN.map(m=>`<li>${m}</li>`).join("");
 $("#tixt").innerHTML=TIX.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("");
 $("#fixt").innerHTML=FX.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("");
 $("#nw").textContent=MAN.length;
-const st=JSON.parse(localStorage.getItem("twck12")||"{}");
+let st={};try{st=JSON.parse(localStorage.getItem("twck12")||"{}")||{}}catch(e){st={}}
 $("#chkl").innerHTML=CK.map((c,i)=>`<label><input type="checkbox" data-i="${i}" ${st[i]?"checked":""}>${c}</label>`).join("");
-$("#chkl").addEventListener("change",e=>{st[e.target.dataset.i]=e.target.checked;localStorage.setItem("twck12",JSON.stringify(st))});
+$("#chkl").addEventListener("change",e=>{st[e.target.dataset.i]=e.target.checked;try{localStorage.setItem("twck12",JSON.stringify(st))}catch(err){}});
 const dd=Math.ceil((new Date("2026-11-27T00:00:00+08:00")-new Date())/864e5);$("#cd").textContent=dd>0?dd:(dd>-13?"On trip":"Done");
 </script></body></html>
