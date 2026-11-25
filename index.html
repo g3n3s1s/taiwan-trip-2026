@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<title>Taiwan Family Trip 2026 – Dashboard v1.7</title>
+<title>Taiwan Family Trip 2026 – Dashboard v1.8</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" onerror="this.onerror=null;this.href='https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css'">
 <style>
 :root{--acc:#0ea5e9;--bg:#f4f6fa;--card:#fff;--ink:#1d2433;--mut:#6b7385;--line:#e5e7eb;--soft:#f1f5f9;--th:#f8fafc;--nav:#fff;
@@ -74,7 +74,7 @@ footer{font-size:.7rem;color:var(--mut);padding:10px 14px 30px;max-width:920px;m
 @media(max-width:520px){.it{grid-template-columns:64px 1fr}.leg{padding-left:72px}.mode{display:none}.map{height:260px}}
 </style></head><body>
 <header><h1>🇹🇼 Taiwan Family Trip — Hsinchu · Miaoli · Taipei</h1>
-<p>27 Nov – 9 Dec 2026 · TR872 / TR875 · Rev 1.7 (built on v1.6 · salt park · NET order · Rongjin · 8 Dec options)</p>
+<p>27 Nov – 9 Dec 2026 · TR872 / TR875 · Rev 1.8 (Strawberry Cultural Center · Banqiao → 4 Dec · Shimamura & COOKIE886 on 6 Dec)</p>
 <div class="stats"><div class="stat"><b id="cd">–</b><span>days to go</span></div><div class="stat"><b>5</b><span>self-drive days</span></div><div class="stat"><b>6</b><span>Taipei MRT days</span></div><div class="stat"><b id="nw">–</b><span>items to check</span></div></div></header>
 <nav><button class="on" data-t="plan">📅 Itinerary</button><button data-t="ovm">🗺 Trip Map</button><button data-t="opt8">🗓 8 Dec options</button><button data-t="zoo">🐼 Zoo &amp; Maokong</button><button data-t="clo">🚧 Closures</button><button data-t="tix">🎟 Tickets</button><button data-t="fix">🛠 Changes</button><button data-t="chk">✅ Checklist</button></nav>
 <main>
@@ -121,7 +121,7 @@ footer{font-size:.7rem;color:var(--mut);padding:10px 14px 30px;max-width:920px;m
 <p class="legend" style="margin-top:8px">"Not recorded" = the model used for that earlier version wasn't logged in the file, so it can't be confirmed.</p></div></section>
 <section class="tab" id="chk"><div class="card chk" id="chkl"></div></section>
 </main>
-<footer>Map pins are approximate. Use 🧭 links for exact navigation. Drive lines follow roads when routing loads; other lines are straight. Map © OpenStreetMap contributors. Hours, prices and closures checked 23–24 Nov 2026; check again the day before. v1.7 built by Claude Opus 5.5 on the v1.6 baseline.</footer>
+<footer>Map pins are approximate. Use 🧭 links for exact navigation. Drive lines follow roads when routing loads; other lines are straight. Map © OpenStreetMap contributors. Hours, prices and closures checked 23–24 Nov 2026; check again the day before. v1.8 built by Claude Opus 5.5 on the v1.7 baseline.</footer>
 <script>
 /* ===== Places: key:[lat,lng,label,google query] ===== */
 const P={
@@ -143,8 +143,8 @@ zj:[24.6995,121.0575,"鄒記菜包","鄒記菜包 北埔"],
 nwp:[24.7060,121.1795,"Neiwan public car park (Datong Rd)","內灣老街公有停車場"],
 nw:[24.7050,121.1830,"Neiwan Old Street","內灣老街"],
 nwt:[24.7046,121.1827,"內灣茶堂客家菜 (Zhongzheng Rd 61)","內灣茶堂客家菜"],
-lh:[24.4220,120.8640,"六合高架牛奶草莓農場","六合高架牛奶草莓農場"],
-suhu:[24.4180,120.8800,"紅色琉璃瓦草莓園 & SUHU Café (approx.)","紅色琉璃瓦草莓園 SUHU Café"],
+scc:[24.4235,120.8648,"Dahu Strawberry Cultural Center + Dahu Winery (2-4 Baliaowan)","大湖草莓文化館"],
+qlx:[24.4260,120.8665,"七里香甕仔雞 Dahu branch (approx.)","七里香甕仔雞 大湖店"],
 nzp:[24.5978,121.0008,"Nanzhuang Visitor Centre car park","南庄遊客中心 停車場"],
 nz:[24.5990,121.0000,"Nanzhuang Old Street / Osmanthus Lane","南庄老街 桂花巷"],
 wcs:[24.5983,121.0012,"屋場食事 (Hakka dinner)","屋場食事 南庄"],
@@ -177,7 +177,9 @@ dw2:[25.0563,121.5079,"Dadaocheng Wharf","大稻埕碼頭"],
 rs:[25.0570,121.5101,"Rice & Shine","Rice & Shine 迪化"],
 zs:[25.0528,121.5212,"Zhongshan (Linear Park · Chifeng St)","中山 心中山線形公園"],
 sam:[25.0533,121.5207,"SAMO ONDOH Zhongshan (9 Chifeng St)","SAMO ONDOH 台北中山門市"],
-ck:[25.0530,121.5225,"COOKIE886","COOKIE886 中山"],
+ck:[25.0578,121.5205,"COOKIE886 Taipei (Lane 66, Minsheng W Rd)","COOKIE886 台北店 民生西路66巷"],
+shim:[25.0525,121.5226,"Shimamura Zhongshan (148 Zhongshan N Rd Sec 1)","思夢樂 中山店"],
+jjz:[25.0548,121.5263,"雞家莊本店 (55 Changchun Rd)","雞家莊 本店 長春路"],
 bq:[25.0128,121.4648,"Banqiao Christmasland + German market","新北市政府 歡樂耶誕城"],
 yk:[25.0330,121.5297,"Yongkang Street (Dongmen Exit 5)","永康街"],
 rong:[25.0317,121.5244,"Rongjin Gorgeous Time (Jinhua St) + Jinshan Park","榕錦時光生活園區"],
@@ -249,16 +251,16 @@ const D=[
 ["17:00–18:15","f","內灣茶堂客家菜 (dinner)","Set menus 4 dishes + soup from NT$500, free tea & lei-cha","","10:30–19:30 (closed Wed)","","","nwt"],
 ["→","Drive 31 km · 39 min","car"],
 ["19:00","h","SOL HOTEL","","","","","","sol"]]},
-{date:"2026-12-01",dow:"Tue",title:"Strawberries, SUHU Café & Nanzhuang",m:"car",it:[
+{date:"2026-12-01",dow:"Tue",title:"Dahu Strawberry Cultural Center & Nanzhuang",m:"car",it:[
 ["08:45","h","Depart SOL HOTEL","","","","","","sol"],
 ["→","Drive ~60 km · ~55–60 min","car"],
-["09:45–11:15","a","六合高架牛奶草莓農場","Early season; call 037-993521 the day before","warn","08:00–18:30","No entry fee · ~NT$700 per catty picked","🧒/👵 no ticket; raised beds 90–120 cm","lh"],
-["→","Drive ~10–15 min into the hills (narrow lane)","car"],
-["11:30–13:00","f","紅色琉璃瓦 & SUHU Café (lunch)","Strawberry café. Book 2-h slot online & pay deposit. Rest days 'irregular' in season: CHECK FB before booking","warn","Café 09:30–17:30 (last order 17:00)","Min spend NT$300 (age 7+) · 👵 NT$300","🧒 age 3–6 min spend NT$150 (under 3 free)","suhu"],
+["09:45–11:15","a","🍓 Dahu Strawberry Cultural Center (大湖草莓文化館) + Dahu Winery","Replaces strawberry picking & SUHU Café. 1F strawberry products & produce, 2F film room & gifts, 3F how strawberries grow, 4F strawberry-themed restaurant, 5F rooftop garden. Winery next door: strawberry ice cream & cakes. Ready-picked strawberries on sale","fix","Weekdays 09:00–17:30","Entry fee not confirmed (likely free)","🧒/👵 check on site","scc"],
+["→","Drive ~3 min (same Baliaowan area, on the way to Nanzhuang)","car"],
+["11:30–12:45","f","七里香甕仔雞 Dahu branch (lunch)","Clay-jar chicken roasted over longan wood; easy parking, roomy dining room. Backup: 鄉村客棧 (Dahu-strawberry dishes, low salt/oil, 11:30–14:00) or the Cultural Center's 4F restaurant","new","Weekdays 10:30–19:30","","","qlx"],
 ["→","Drive ~32 km · ~50 min","car"],
-["13:50","tr","Park at Nanzhuang Visitor Centre car park","~200 spaces, 3–5 min walk. Weekday: easy","","","Weekday usually free / low","","nzp"],
+["13:40","tr","Park at Nanzhuang Visitor Centre car park","~200 spaces, 3–5 min walk. Weekday: easy","","","Weekday usually free / low","","nzp"],
 ["→","Walk 5 min","walk"],
-["14:00–16:45","a","Nanzhuang Old Street: Osmanthus Lane, old post office, washing pool","Osmanthus iced tangyuan, egg rolls. Osmanthus Lane is narrow with steps. Many stalls close ~17:00–17:30","","~09:00–17:30","Free","🧒/👵 free","nz"],
+["13:50–16:45","a","Nanzhuang Old Street: Osmanthus Lane, old post office, washing pool","Osmanthus iced tangyuan, egg rolls. Osmanthus Lane is narrow with steps. Many stalls close ~17:00–17:30","","~09:00–17:30","Free","🧒/👵 free","nz"],
 ["→","Walk 3 min","walk"],
 ["17:00–18:15","f","屋場食事 (Hakka dinner)","Refined Hakka in an old house. Reserve. (粗茶淡飯 & 老金龍 are closed Tue)","","Weekdays 11:00–14:30 / 17:00–19:30 (closed Thu)","","","wcs"],
 ["→","Drive 38 km · ~50 min","car"],
@@ -309,17 +311,18 @@ const D=[
 ["19:15–20:15","f","ICHIRAN Taipei (Songren Rd)","Kids' ramen available","","Mon–Thu 10:00–05:00","","Kids' ramen","ich"],
 ["→","Taxi ~10 min or Blue 2 stops","car"],
 ["20:30","h","Hotel","","","","","","gwz"]]},
-{date:"2026-12-04",dow:"Fri",title:"Science + Astronomy museums + Children's Amusement Park",m:"pt",it:[
+{date:"2026-12-04",dow:"Fri",title:"Science + Astronomy + Children's Park → Banqiao Christmas market",m:"pt",it:[
 ["08:40","h","Leave hotel","","","","","","gwz"],
 ["→","Blue → Taipei Main → Red → Shilin, short taxi · ~45 min","mrt"],
 ["09:20–12:00","a","National Taiwan Science Education Center","Lunch at food court. SkyCycle paused 12:00–13:00 (needs ≥127 cm)","","Tue–Fri 09:00–17:00","Adult NT$120 · 👵 65+ free","🧒 6 & under free","sc"],
 ["→","Walk 3 min","walk"],
 ["12:15–14:00","a","Taipei Astronomical Museum","Cosmic Adventure ride: under-6s must ride with someone 12+","","09:00–17:00 (Mon closed)","Exhibits NT$40 · ride NT$70 · 👵 exhibits free, ride NT$35","🧒 exhibits free; ride/theatre half price","as"],
 ["→","Walk 3 min","walk"],
-["14:15–16:45","a","🎠 Taipei Children's Amusement Park","Carousel, Ferris wheel, monorail, free sandpit & indoor ball pit (socks needed). Weekday = short queues","","Tue–Fri 09:00–17:00","Entry NT$30 · 👵 65+ free · rides NT$20–30","🧒 entry free; rides paid (free only if <85 cm or under 2); many rides need ≥90 cm","tcap"],
-["→","Taxi to Jiantan, Red → Blue · ~40 min","mrt"],
-["17:30–18:30","f","Dinner near hotel","Easy night after a full day","","","","",""],
-["18:45","h","Hotel","","","","","","gwz"]]},
+["14:15–15:45","a","🎠 Taipei Children's Amusement Park (shortened)","Carousel, Ferris wheel, free sandpit & ball pit (socks). Skip it if toddler/senior are tired and head to Banqiao earlier","fix","Tue–Fri 09:00–17:00","Entry NT$30 · 👵 65+ free · rides NT$20–30","🧒 entry free; rides paid unless <85 cm","tcap"],
+["→","Taxi to Jiantan, Red → Taipei Main, Blue → Banqiao · ~45 min","mrt"],
+["16:45–19:30","a","🎄 New Taipei Christmasland + German Christmas Market","Moved from 6 Dec. Market at Citizen Plaza near Banqiao Exit 3A. Friday evening is less crowded than the weekend. Dinner at the market stalls","fix","Market 4 Dec 11:00–22:00","Free entry","🧒/👵 free","bq"],
+["→","Blue line direct ~25 min","mrt"],
+["20:00","h","Hotel","","","","","","gwz"]]},
 {date:"2026-12-05",dow:"Sat",title:"NET Da'an → NET Zhongxiao, Garden City & Master Spicy",m:"pt",it:[
 ["11:20","h","Leave hotel","","","","","","gwz"],
 ["→","Taxi ~8 min","car"],
@@ -336,24 +339,24 @@ const D=[
 ["17:30–18:45","f","Master Spicy Noodle (Yanji)","Spicy; ask for plain broth for toddler","","17:30–21:00 dinner","","","msn"],
 ["→","Blue 1 stop","mrt"],
 ["19:00","h","Hotel","","","","","","gwz"]]},
-{date:"2026-12-06",dow:"Sun",title:"Dihua, Zhongshan, SAMO ONDOH & Banqiao Christmasland",m:"pt",it:[
+{date:"2026-12-06",dow:"Sun",title:"Dihua → COOKIE886 → SAMO ONDOH → Shimamura",m:"pt",it:[
 ["09:00","h","Leave hotel","","","","","","gwz"],
 ["→","Taxi ~20 min (easier for senior) or MRT Blue→Ximen, Green→Beimen","car"],
 ["09:30–11:15","s","Dihua Old Street","Xiahai City God Temple, dried goods","","","Free","🧒/👵 free","dh"],
 ["→","Walk 5 min","walk"],
 ["11:15–11:45","a","Dadaocheng Wharf","Space for toddler to run","","","Free","","dw2"],
 ["→","Walk 6 min","walk"],
-["12:00–13:00","f","Rice & Shine","","","Check hours","","","rs"],
+["12:00–13:00","f","Rice & Shine (lunch)","","","Check hours","","","rs"],
 ["→","Taxi ~8 min","car"],
-["13:15–14:30","s","Zhongshan: Linear Park · Chifeng St","Flat, stroller-friendly; cafés for senior rest","","","","","zs"],
-["→","Walk 2 min","walk"],
-["14:30–15:15","s","SAMO ONDOH Zhongshan store","9 Chifeng St, near Zhongshan Exit 5","","Sat–Sun 12:00–22:00","","","sam"],
-["→","Walk 3 min","walk"],
-["15:15–15:40","s","COOKIE886","","","Check hours","","","ck"],
-["→","Red 1 stop → Taipei Main, Blue → Fuzhong · ~25 min","mrt"],
-["16:15–19:00","a","🎄 Banqiao Christmasland + German Christmas Market","Last day of the market; dinner at stalls","","6 Dec 11:00–21:00","Free","🧒/👵 free","bq"],
-["→","Blue line direct ~25 min","mrt"],
-["19:30","h","Hotel","","","","","","gwz"]]},
+["13:15–13:45","s","🍪 COOKIE886 – FIRST (important)","Opens 12:30; weekend queues build later. Free tasting. Cookies are fragile – keep in a separate bag; they keep 20 days at room temperature","fix","Daily 12:30–20:30","","","ck"],
+["→","Walk ~10 min south through Chifeng St","walk"],
+["13:55–15:15","s","SAMO ONDOH Zhongshan store (80 min)","9 Chifeng St","fix","Sat–Sun 12:00–22:00","","","sam"],
+["→","Walk ~10 min through Zhongshan Linear Park","walk"],
+["15:30–17:30","s","🛍 Shimamura Zhongshan (2 h)","148 Zhongshan N Rd Sec 1, ~2 min from Zhongshan Exit 2. 4 floors with lift; kids & baby on 4F; toilets 1F & 4F","new","Daily 10:00–22:00","","Kids' floor 4F","shim"],
+["→","Taxi ~5 min","car"],
+["17:40–19:00","f","雞家莊本店 (dinner)","Michelin Bib Gourmand Taiwanese: poached chicken & chicken soup – gentle for toddler & senior. Book for Sunday. Cards accepted","new","11:30–21:30","","","jjz"],
+["→","Taxi ~15 min with shopping","car"],
+["19:15","h","Hotel","Banqiao moved to 4 Dec","","","","","gwz"]]},
 {date:"2026-12-07",dow:"Mon",title:"Yongkang Street → Rongjin Gorgeous Time → Maokong sunset",m:"pt",it:[
 ["10:30","h","Leave hotel","","","","","","gwz"],
 ["→","Blue 1 stop → Zhongxiao Xinsheng, Orange 1 stop → Dongmen Exit 5 · ~15 min","mrt"],
@@ -394,9 +397,8 @@ const CLO=[
 ["29 Nov","Flying Cow Ranch","Stream repair works until 31 Dec: nature trail closed","<span class=md>Partial</span>"],
 ["29 Nov (Sun)","Taiyen Tongxiao salt park","Closed every Monday; weekends 08:30–17:00","<span class=ok>Sun is fine · arrive by 16:00</span>"],
 ["30 Nov (Mon)","Neiwan Old Street","Weekday: ~50–70% of shops open; many rest Wed/Thu","<span class=ok>Mon is fine</span>"],
-["1 Dec (Tue)","SUHU Café","Rest days 'irregular' in season; may close if fruit runs out","<span class=md>Check FB & book</span>"],
 ["1 Dec (Tue)","粗茶淡飯 / 老金龍 (Nanzhuang)","Closed on Tuesday","<span class=ok>Avoided: 屋場食事</span>"],
-["1 Dec","Dahu strawberries","Early season; farm may pause after rain","<span class=md>Call ahead</span>"],
+["1 Dec (Tue)","Dahu Strawberry Cultural Center","Weekdays 09:00–17:30","<span class=ok>Tue is fine</span>"],
 ["2 Dec (Wed)","Hsinchu Zoo","Closed Mondays","<span class=ok>Wed is fine</span>"],
 ["4 Dec","Science Center","9F renovation; SkyCycle paused 12:00–13:00","<span class=md>Partial</span>"],
 ["4 Dec (Fri)","Children's Amusement Park","Closed Mondays (non-holiday)","<span class=ok>Fri is fine</span>"],
@@ -405,8 +407,8 @@ const CLO=[
 ["7 Dec (Mon)","Lin Family Mansion & Garden","Closed first Monday of each month","<span class=ok>Only relevant if N3 picked for 8 Dec (open)</span>"],
 ["8 Dec (Tue)","National Taiwan Museum / Land Bank hall","Closed Mondays only","<span class=ok>Tue is fine (option N1)</span>"],
 ["Any day","Maokong Gondola","Stops for strong wind, lightning, quake ≥4 or typhoon","Backup: longer at Rongjin + Jinshan Park"],
-["4–6 Dec","Banqiao German Christmas Market","These 3 days only","<span class=ok>Planned Sun 6 Dec</span>"]];
-const MAN=["SUHU Café open on Tue 1 Dec (FB) & 2-h booking + deposit","梁陳吉日 hours for 17:05 dinner on Sun","Flying Cow: does the 65+ price apply to foreign seniors?","Flying Cow mini-horse ride details","青青好農食 Monday hours","屋場食事 reservation for Tue 1 Dec","Hakka restaurants (吉祥樓, 笠園): weekly rest day","Maokong Gondola running on Mon 7 Dec","Rongjin shops open on Monday","Rice & Shine, COOKIE886 hours","Green World ZhongXiao late checkout / bag storage on 8 Dec","SOL HOTEL bag storage until 15:00 on 2 Dec","Toddler's exact height (Green World ≤90 cm free)"];
+["4–6 Dec","Banqiao German Christmas Market","These 3 days only (4 Dec 11:00–22:00)","<span class=ok>Planned Fri 4 Dec</span>"]];
+const MAN=["Strawberry Cultural Center entry fee & 4F restaurant hours","七里香甕仔雞 Dahu branch open Tue 1 Dec","梁陳吉日 hours for 17:05 dinner on Sun","Flying Cow: does the 65+ price apply to foreign seniors?","Flying Cow mini-horse ride details","青青好農食 Monday hours","屋場食事 reservation for Tue 1 Dec","Hakka restaurants (吉祥樓, 笠園): weekly rest day","Maokong Gondola running on Mon 7 Dec","Rongjin shops open on Monday","Rice & Shine hours","雞家莊 Sunday booking","Green World ZhongXiao late checkout / bag storage on 8 Dec","SOL HOTEL bag storage until 15:00 on 2 Dec","Toddler's exact height (Green World ≤90 cm free)"];
 /* tickets: [place, hours, adult, toddler 3yo, senior 75yo] */
 const TIX=[
 ["Flying Cow Ranch","Booth 07:00–19:00","NT$280","NT$160 (age 3–K pays; under 3 free)","NT$160 (65+; check foreign eligibility)"],
@@ -415,8 +417,7 @@ const TIX=[
 ["Zhuo Ye Cottage","09:00–17:30","NT$200 (NT$100 credit)","Free if <115 cm","Half price NT$150 (70+; NT$50 credit)"],
 ["Shengxing · Longteng · Neiwan · Nanzhuang","Open-air","Free","Free (rail bike skipped)","Free"],
 ["Green World Farm","08:30–17:30 (tickets till 16:00)","NT$480 · tram card NT$200/5 rides","Free if ≤90 cm or under 3; otherwise child NT$350","NT$400 (65+)"],
-["六合 strawberries","08:00–18:30","No entry · ~NT$700 per catty","No ticket","No ticket"],
-["SUHU Café","Picking 08:30–17:30 · Café 09:30–17:30","Min spend NT$300","Min spend NT$150 (age 3–6)","Min spend NT$300"],
+["Dahu Strawberry Cultural Center","Weekdays 09:00–17:30","Not confirmed (likely free)","Check on site","Check on site"],
 ["Hsinchu Zoo","Tue–Sun 09:00–17:00","NT$50","Free (under 6)","Free (65+; show passport)"],
 ["Taipei Zoo","09:00–17:00 (last entry 16:00)","NT$100 · tram NT$5","Free; tram free (under 6)","Pays NT$100 — 65+ free only for ROC nationals/ARC; tram NT$5"],
 ["Maokong Gondola","Weekdays 09:00–21:00","NT$180 single · NT$300 day cap (EasyCard)","Free (0–5, with paying adult)","Full fare (concession for nationals)"],
@@ -426,13 +427,16 @@ const TIX=[
 ["Xinyi lights · Dream Plaza · A11 tree","Lights 17:30 · shows 16:30–22:00","Free","Free","Free"],
 ["NET Da'an / NET Zhongxiao","11:30–21:30 / 11:00–22:00","—","—","—"],
 ["Garden City","Fri–Sat 11:00–22:00","Free entry","5F play area","—"],
-["Dihua · Zhongshan · SAMO ONDOH · COOKIE886","Shops vary","Free","Free","Free"],
-["Banqiao German market","6 Dec 11:00–21:00","Free","Free","Free"],
+["Dihua · COOKIE886 · SAMO ONDOH · Shimamura","COOKIE886 12:30–20:30 · Shimamura 10:00–22:00","Free","Free","Free"],
+["Banqiao German market","4 Dec 11:00–22:00","Free","Free","Free"],
 ["Yongkang Street · Rongjin Gorgeous Time","Rongjin park 11:00–20:00","Free","Free; Jinshan Park playground next door","Free; lifts & accessible toilets"],
 ["Lungshan Temple","Daily","Free","Free","Free"],
 ["Huashan 1914","Grounds open","Free","Free","Free"],
 ["Master Spicy · ICHIRAN · Moon Moon Food","See itinerary","—","ICHIRAN kids' ramen","—"]];
 const FX=[
+["v1.8 · 1 Dec","Strawberry picking & SUHU Café removed → Dahu Strawberry Cultural Center + Winery; lunch at 七里香甕仔雞 (backups 鄉村客棧 / 4F restaurant)","Your request","Claude Opus 5.5"],
+["v1.8 · 4 Dec","Banqiao Christmasland + German market moved here (16:45–19:30); Children's Park shortened to 14:15–15:45","Your request","Claude Opus 5.5"],
+["v1.8 · 6 Dec","COOKIE886 first (13:15), SAMO ONDOH 80 min, Shimamura Zhongshan 2 h, dinner at 雞家莊; Banqiao removed","Your request","Claude Opus 5.5"],
 ["v1.7","Rebuilt from the full v1.6 baseline (all tabs and details kept)","Previous v1.7 was a smaller rebuild","Claude Opus 5.5"],
 ["v1.7 · 29 Nov","Taiyen Tongxiao salt park added 15:40–16:50 between Flying Cow and dinner; dinner moved to 17:05","Your request","Claude Opus 5.5"],
 ["v1.7 · 5 Dec","NET Da'an first (opens 11:30), then NET Zhongxiao; leave hotel 11:20","Your request","Claude Opus 5.5"],
@@ -444,7 +448,7 @@ const FX=[
 ["v1.5","Persimmon farm to 30 Nov; new 8 Dec plan without Gloria","Your request","Not recorded"],
 ["v1.4","Date badges; zoo/Maokong split; night markets removed","Your request","Not recorded"],
 ["v1.0–v1.3","Initial dashboard, fixes, maps and map fix","Your requests","Not recorded"]];
-const CK=["Check SUHU Café FB, book 1 Dec lunch & pay deposit","Reserve 屋場食事 for 1 Dec 17:00","Call 六合 strawberry farm on 30 Nov (037-993521)","Small towel for salt-park foot bath (29 Nov)","Measure toddler's height (Green World ≤90 cm free)","Passports for senior/child concessions","Choose 8 Dec option (N1–N6)","Confirm Tripool 8 Dec 20:00 pickup at Green World ZhongXiao","Child seat: Tripool ×3 + rental car","International Driving Permit","SOL HOTEL: bag storage until 15:00 on 2 Dec","Check gondola status on 6 Dec evening","Ask Green World for late checkout / bag storage on 8 Dec","EasyCard for each adult (zoo tram, gondola, MRT, kids' park rides)","Socks for kids' park ball pit","Taiwan Arrival Card online"];
+const CK=["Book 雞家莊 for Sun 6 Dec 17:40","Reserve 屋場食事 for 1 Dec 17:00","Small towel for salt-park foot bath (29 Nov)","Measure toddler's height (Green World ≤90 cm free)","Passports for senior/child concessions","Choose 8 Dec option (N1–N6)","Confirm Tripool 8 Dec 20:00 pickup at Green World ZhongXiao","Child seat: Tripool ×3 + rental car","International Driving Permit","SOL HOTEL: bag storage until 15:00 on 2 Dec","Check gondola status on 6 Dec evening","Ask Green World for late checkout / bag storage on 8 Dec","EasyCard for each adult (zoo tram, gondola, MRT, kids' park rides)","Socks for kids' park ball pit","Taiwan Arrival Card online"];
 
 /* ===== helpers ===== */
 const $=s=>document.querySelector(s),LBL={f:"Food",a:"See",s:"Shop",tr:"Move",h:"Stay"},TAG={fix:"CHANGED",new:"NEW",warn:"CHECK"};
